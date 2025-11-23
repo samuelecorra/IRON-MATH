@@ -207,3 +207,4 @@ Oltre agli argomenti, le Indicazioni insistono su alcune abilità trasversali ch
 - Saper **descrivere il procedimento** seguito, anche per iscritto (non solo dare il risultato).
 - **Confrontare metodi diversi** di soluzione (ad esempio, un compagno usa il disegno, un altro un’espressione numerica).
 - Usare, quando ha senso, strumenti diversi: **calcolo scritto, mentale, calcolatrice, foglio di calcolo**. ([Ministero dell'Interno][1])
+

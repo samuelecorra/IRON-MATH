@@ -69,7 +69,7 @@ trovare **l** quando si conosce **P**.
     
 2. Per isolare **l**, vogliamo “togliere il 4” che lo moltiplica.
     
-3. Come si “toggia il 4” in modo legale?  
+3. Come si “toglie il 4” in modo legale?  
     → dividendo **entrambi i membri** per 4.
     
 
@@ -297,7 +297,7 @@ Esempi intuitivi:
 
 ---
 
-# **11. Cosa NON bisogna dire ai bambini**
+# **11. Cosa bisogna dire ai bambini**
 
 - Non serve mai memorizzare “formule inverse”: sono tutte uguali tra loro.
     
@@ -328,13 +328,3 @@ Perché se i bambini capiscono questo:
     
 - inizieranno a vedere la matematica come _capire_, non _ricordare_.
     
-
----
-
-# **Lezione 3 completata.**
-
-Vuoi fare:
-
-➡️ **Lezione 4 – Disuguaglianze: leggere, scrivere e rappresentare sulla retta numerica**  
-oppure  
-➡️ **Lezione 4 – Formule e relazioni: come leggere P = 2(a+b), A = b·h, a+b=b+a come “frasi matematiche”**?

@@ -11,12 +11,14 @@
             "id": "c9aa16eb797302b8",
             "type": "leaf",
             "state": {
-              "type": "pdf",
+              "type": "markdown",
               "state": {
-                "file": "logchatgpt.pdf"
+                "file": "programma/medie/1a media/N3_Relazioni e Funzioni/UD1/L2 -  Dalle formule alle equazioni - il vero significato dell’uguale.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-file-text",
-              "title": "logchatgpt"
+              "icon": "lucide-file",
+              "title": "L2 -  Dalle formule alle equazioni - il vero significato dell’uguale"
             }
           },
           {
@@ -25,15 +27,16 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "programma/medie/1a media/N3_Relazioni e Funzioni/UD1/L3 – Come ottenere tutte le formule inverse dei poligoni partendo dai perimetri standard.md",
+                "file": "programma/medie/1a media/programma1media.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "L3 – Come ottenere tutte le formule inverse dei poligoni partendo dai perimetri standard"
+              "title": "programma1media"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -106,7 +109,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "logchatgpt.pdf",
+                "file": "programma/medie/1a media/programma1media.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -116,7 +119,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Riferimenti a logchatgpt"
+              "title": "Riferimenti a programma1media"
             }
           },
           {
@@ -125,12 +128,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "logchatgpt.pdf",
+                "file": "programma/medie/1a media/programma1media.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Collegamenti in uscita da logchatgpt"
+              "title": "Collegamenti in uscita da programma1media"
             }
           },
           {
@@ -168,13 +171,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "logchatgpt.pdf",
+                "file": "programma/medie/1a media/programma1media.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Struttura di logchatgpt"
+              "title": "Struttura di programma1media"
             }
           }
         ]
@@ -195,43 +198,43 @@
       "bases:Create new base": false
     }
   },
-  "active": "c9aa16eb797302b8",
+  "active": "5e4afe4c62ab0910",
   "lastOpenFiles": [
-    "logchatgpt.md",
-    "logchatgpt.pdf",
-    "programma/medie/1a media/N4_Dati/UD2/L1.md",
+    "legal/NDA DI IRONMATH.md",
+    "programma/medie/1a media/N4_Dati/UD2/L1 – Eventi certi, possibili e impossibili (introduzione alla probabilità).md",
+    "legal",
+    "programma/medie/1a media/N4_Dati/Intro Nucleo 4 - Dati e Previsioni (Statistica di Base).md",
     "programma/medie/1a media/N4_Dati/UD1/L7 - Interpretare diagrammi cartesiani (tendenze, picchi, crescite, confronti).md",
-    "programma/medie/1a media/N4_Dati/UD2",
     "programma/medie/1a media/N4_Dati/UD1/L6 – Diagrammi cartesiani semplici (collegamento con il piano cartesiano).md",
     "programma/medie/1a media/N4_Dati/UD1/L5 – Pittogrammi - quando servono e come si costruiscono.md",
     "programma/medie/1a media/N4_Dati/UD1/L4 – Come leggere e interpretare un diagramma a barre.md",
     "programma/medie/1a media/N4_Dati/UD1/L3 – Come si costruisce un diagramma a barre a partire da una tabella.md",
     "programma/medie/1a media/N4_Dati/UD1/L2 – I diagrammi - come rappresentiamo i dati (dalla 1ª media fino all’università).md",
     "programma/medie/1a media/N4_Dati/UD1/L1 - Che cosa sono i dati e come si raccolgono (Statistica di base).md",
+    "programma/medie/1a media/N1_Nucleo_Numeri/UD3/L4 - Come trasformare un problema in un’espressione numerica.md",
+    "programma/medie/1a media/N3_Relazioni e Funzioni/UD2/L1 - Speciale – Perché da ora in poi la matematica userà sempre più lettere (e perché è una cosa bellissima).md",
+    "programma/medie/1a media/N3_Relazioni e Funzioni/UD1/L3 – Come ottenere tutte le formule inverse dei poligoni partendo dai perimetri standard.md",
+    "programma/medie/1a media/N3_Relazioni e Funzioni/UD1/L2 -  Dalle formule alle equazioni - il vero significato dell’uguale.md",
+    "programma/medie/1a media/N3_Relazioni e Funzioni/UD1/L1 - Numeri, simboli e operatori.md",
+    "programma/medie/1a media/N3_Relazioni e Funzioni/UD1/L0 - Linguaggio matematico di base (INTRO UNITA').md",
     "programma/medie/1a media/programma1media.md",
+    "logchatgpt.pdf",
+    "programma/medie/3a media",
+    "logchatgpt.md",
+    "programma/medie/1a media/N4_Dati/UD2",
     "programma/medie/1a media/N4_Dati/UD1",
     "programma/medie/1a media/N4_Dati/Senza nome.md",
-    "programma/medie/1a media/N4_Dati/Intro Nucleo 4 - Dati e Previsioni (Statistica di Base).md",
     "programma/medie/1a media/N3_Relazioni e Funzioni/UD3/L2 – Il Piano Cartesiano - assi, origine, griglia.md",
     "programma/medie/1a media/N4_Dati",
     "programma/medie/1a media/N3_Relazioni e Funzioni/UD3/L1 – I Sistemi di Riferimento (SDR) - cosa sono, perché esistono, perché senza di loro non c’è matematica moderna.md",
     "programma/medie/1a media/N3_Relazioni e Funzioni/UD3/L0_Il Piano Cartesiano e i Sistemi di Riferimento (INTRO UNITA').md",
     "programma/medie/1a media/N3_Relazioni e Funzioni/UD3",
     "programma/medie/1a media/N3_Relazioni e Funzioni/Intro Nucleo 3 - Relazioni e Funzioni.md",
-    "programma/medie/1a media/N3_Relazioni e Funzioni/UD2/L1 - Speciale – Perché da ora in poi la matematica userà sempre più lettere (e perché è una cosa bellissima).md",
     "programma/medie/1a media/N3_Relazioni e Funzioni/UD2/Senza nome.md",
-    "programma/medie/1a media/N3_Relazioni e Funzioni/UD1/L3 – Come ottenere tutte le formule inverse dei poligoni partendo dai perimetri standard.md",
-    "programma/medie/1a media/N3_Relazioni e Funzioni/UD1/L2 -  Dalle formule alle equazioni - il vero significato dell’uguale.md",
-    "programma/medie/1a media/N3_Relazioni e Funzioni/UD1/L1 - Numeri, simboli e operatori.md",
-    "programma/medie/1a media/N3_Relazioni e Funzioni/UD1/L0 - Linguaggio matematico di base (INTRO UNITA').md",
     "programma/medie/1a media/N2_Spazio_e_Figure/UD1/L1 – Gli enti geometrici fondamentali.md",
     "programma/medie/1a media/N2_Spazio_e_Figure/UD4/L6 - Elementi di un poligono - lati, vertici, diagonali, angoli interni ed esterni.md",
     "programma/medie/1a media/N3_Relazioni e Funzioni/UD2",
     "programma/medie/1a media/N3_Relazioni e Funzioni/UD1",
-    "programma/medie/1a media/N2_Spazio_e_Figure/UD4/L5 – Perimetri dei principali poligoni.md",
-    "programma/medie/1a media/N2_Spazio_e_Figure/UD4/L4 – Quadrilateri - definizioni e classificazione.md",
-    "programma/medie/1a media/N3_Relazioni e Funzioni",
-    "programma/medie/1a media/N2_Spazio_e_Figure/UD4",
-    "programma/medie/1a media/N2_Spazio_e_Figure/UD3"
+    "programma/medie/1a media/N3_Relazioni e Funzioni"
   ]
 }

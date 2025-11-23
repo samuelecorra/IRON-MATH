@@ -275,17 +275,3 @@ Togliendo il mistero alle lettere, la matematica torna a essere ciò che deve es
         
 
 Sono **tutti lo stesso gesto**.
-
----
-
-# **Lezione completata.**
-
-Se vuoi, ora possiamo fare:
-
-👉 **Il laboratorio di isolamento delle incognite (super operativo, decine di casi reali)**  
-oppure  
-👉 **La Lezione 5: disuguaglianze e come rappresentarle sulla retta numerica**  
-oppure  
-👉 **Passare all’UD2 – Le prime lettere: cosa sono le variabili e perché non fanno paura.**
-
-Dimmi tu.
