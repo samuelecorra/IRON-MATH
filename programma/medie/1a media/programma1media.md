@@ -1,4 +1,4 @@
-Partiamo con la mappa ufficiale” di 1ª media così come emerge dalle **Indicazioni nazionali** + dai curricoli di istituto che le applicano (stesso impianto: 4 nuclei tematici). ([Ministero dell'Interno][1])
+Partiamo con la mappa ufficiale” di 1ª media così come emerge dalle **Indicazioni nazionali** + dai curricoli di istituto che le applicano (stesso impianto: 4 nuclei tematici).
 
 ---
 
