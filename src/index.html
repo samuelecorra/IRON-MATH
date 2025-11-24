@@ -31,7 +31,25 @@
           Invia
         </button>
       </div>
-      <nav class="nav">
+      <button class="hamburger-btn" id="hamburger-btn" type="button" aria-label="Menu" aria-expanded="false">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+      <nav class="nav" id="nav-menu">
+        <div class="mobile-search-wrapper">
+          <div class="prompt-bar prompt-bar-mobile">
+            <input
+              type="text"
+              class="prompt-input"
+              placeholder="Chiedi qualcosa a IronMath..."
+              aria-label="Prompt per IronMath"
+            />
+            <button type="button" class="prompt-submit" aria-label="Invia">
+              Invia
+            </button>
+          </div>
+        </div>
         <button class="nav-btn" type="button">
           <span class="nav-label">Manifesto</span>
           <img

@@ -1111,6 +1111,66 @@ function onStartClicked() {
   render();
 }
 
+// Hamburger Menu functionality
+function initHamburgerMenu() {
+  const hamburgerBtn = document.getElementById("hamburger-btn");
+  const navMenu = document.getElementById("nav-menu");
+  
+  if (!hamburgerBtn || !navMenu) return;
+
+  hamburgerBtn.addEventListener("click", (event) => {
+    event.stopPropagation();
+    const isOpen = navMenu.classList.contains("open");
+    
+    if (isOpen) {
+      closeHamburgerMenu();
+    } else {
+      openHamburgerMenu();
+    }
+  });
+
+  // Chiudi il menu quando si clicca fuori
+  document.addEventListener("click", (event) => {
+    if (!navMenu.contains(event.target) && !hamburgerBtn.contains(event.target)) {
+      closeHamburgerMenu();
+    }
+  });
+
+  // Chiudi il menu quando si ridimensiona la finestra (torna desktop)
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 1000) {
+      closeHamburgerMenu();
+    }
+  });
+
+  function openHamburgerMenu() {
+    navMenu.classList.add("open");
+    hamburgerBtn.classList.add("active");
+    hamburgerBtn.setAttribute("aria-expanded", "true");
+    
+    // Previeni scroll del body quando il menu è aperto
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeHamburgerMenu() {
+    navMenu.classList.remove("open");
+    hamburgerBtn.classList.remove("active");
+    hamburgerBtn.setAttribute("aria-expanded", "false");
+    
+    // Ripristina scroll del body
+    document.body.style.overflow = "";
+  }
+
+  // Chiudi il menu quando si clicca su un link di navigazione
+  const navButtons = navMenu.querySelectorAll(".nav-btn");
+  navButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      closeHamburgerMenu();
+    });
+  });
+}
+
 // Inizializzazione
 render();
 initAuthNav();
+initHamburgerMenu();
