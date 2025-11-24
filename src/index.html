@@ -5,6 +5,7 @@
     <title>IronMath - Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" href="assets/imgs/favicon.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/header.css" />
     <link rel="stylesheet" href="css/main.css" />
@@ -19,9 +20,70 @@
         />
         <span class="logo-text">IronMath</span>
       </a>
+      <div class="prompt-bar" role="search">
+        <input
+          type="text"
+          class="prompt-input"
+          placeholder="Chiedi qualcosa a IronMath..."
+          aria-label="Prompt per IronMath"
+        />
+        <button type="button" class="prompt-submit" aria-label="Invia">
+          Invia
+        </button>
+      </div>
       <nav class="nav">
-        <button class="nav-btn" id="nav-home">Home</button>
-        <button class="nav-btn" id="nav-dashboard">Dashboard</button>
+        <button class="nav-btn" type="button">
+          <span class="nav-label">Manifesto</span>
+          <img
+            src="assets/icons/manifesto.png"
+            alt="Icona Manifesto"
+            class="nav-icon"
+          />
+        </button>
+        <button class="nav-btn" type="button">
+          <span class="nav-label">Dashboard</span>
+          <img
+            src="assets/icons/dashboard.png"
+            alt="Icona Dashboard"
+            class="nav-icon"
+          />
+        </button>
+        <div class="nav-auth-wrapper">
+          <button
+            class="nav-btn nav-account-btn"
+            id="auth-btn"
+            type="button"
+            aria-expanded="false"
+          >
+            <span class="nav-label" id="auth-btn-label">Registrati/Accedi</span>
+            <img
+              src="assets/icons/account.png"
+              alt="Icona Account"
+              class="nav-icon"
+            />
+          </button>
+          <div
+            class="auth-dropdown"
+            id="auth-dropdown"
+            role="menu"
+            aria-hidden="true"
+          >
+            <button
+              class="auth-dropdown-item"
+              data-action="profile"
+              type="button"
+            >
+              Gestione profilo
+            </button>
+            <button
+              class="auth-dropdown-item"
+              data-action="logout"
+              type="button"
+            >
+              Logout
+            </button>
+          </div>
+        </div>
       </nav>
     </header>
 

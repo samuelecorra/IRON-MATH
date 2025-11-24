@@ -15,6 +15,8 @@
   position: sticky;
   top: 0;
   z-index: 10;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
 .home-logo-shortcut {
@@ -37,6 +39,60 @@
   font-size: 14px;
 }
 
+.prompt-bar {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  min-width: 220px;
+  max-width: 520px;
+}
+
+.prompt-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--im-text);
+  font-size: 0.95rem;
+  padding: 6px 4px 6px 12px;
+  outline: none;
+}
+
+.prompt-input::placeholder {
+  color: var(--im-muted);
+}
+
+.prompt-submit {
+  border: none;
+  border-radius: 999px;
+  padding: 8px 18px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #050509;
+  background: linear-gradient(
+    135deg,
+    var(--im-primary),
+    var(--im-primary-soft)
+  );
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
+}
+
+.prompt-submit:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+}
+
+.prompt-submit:active {
+  transform: translateY(0);
+  filter: brightness(0.95);
+}
+
 .nav {
   display: flex;
   gap: 8px;
@@ -51,9 +107,80 @@
   font-size: 13px;
   cursor: pointer;
   transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .nav-btn:hover {
   border-color: var(--im-accent);
   color: var(--im-accent);
+}
+
+.nav-label {
+  line-height: 1.2;
+}
+
+.nav-icon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+.nav-auth-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.nav-account-btn {
+  min-width: 0;
+}
+
+.auth-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: rgba(5, 5, 9, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 6px;
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 190px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+  z-index: 30;
+}
+
+.auth-dropdown.open {
+  display: flex;
+}
+
+.auth-dropdown-item {
+  background: transparent;
+  border: none;
+  color: var(--im-text);
+  text-align: left;
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.auth-dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+@media (max-width: 768px) {
+  .im-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .nav {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
 }
