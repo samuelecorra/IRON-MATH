@@ -13,8 +13,8 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "mvpV0.md",
-                "mode": "source",
+                "file": "mvp/mvpV0.md",
+                "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
@@ -78,8 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 597.5,
-    "collapsed": true
+    "width": 597.5
   },
   "right": {
     "id": "0eafacb1fade7c58",
@@ -186,13 +185,19 @@
   },
   "active": "c9aa16eb797302b8",
   "lastOpenFiles": [
-    "logchatgpt.md",
-    "mvpV0.md",
-    "logchatgpt.pdf",
-    "nda.md",
-    "probleminda.pdf",
+    "Pasted image 20251125214709.png",
+    "legal/NDA DI IRONMATH.md",
     "README.md",
+    "docs/probleminda.pdf",
+    "docs/nda.md",
+    "mvp/mvpV0.md",
     "doctecnico.md",
+    "docs",
+    "mvp/imgs",
+    "mvp",
+    "mvp/imgs/Pasted image 20251125214042.png",
+    "docs/logchatgpt.md",
+    "docs/logchatgpt.pdf",
     "message.txt",
     "programma/medie/1a media/N3_Relazioni e Funzioni/UD2/L1 - Speciale – Perché da ora in poi la matematica userà sempre più lettere (e perché è una cosa bellissima).md",
     "programma/medie/1a media/N1_Nucleo_Numeri/UD2/L3 - Moltiplicazione con i numeri naturali.md",
@@ -201,14 +206,10 @@
     "programma/medie/1a media/N1_Nucleo_Numeri/UD2/L0 - Calcolo con i numeri naturali (INTRO UNITA').md",
     "programma/medie/1a media/N1_Nucleo_Numeri/UD1/L1 - Lettura e Scrittura dei Numeri Naturali.md",
     "programma/medie/1a media/N1_Nucleo_Numeri/UD1/L0 – Sistema di numerazione e valore posizionale (INTRO UNITA').md",
-    "📄 IronMath – Documento Tecnico per Collaborazione Full-Stack & AI.pdf",
-    "legal/NDA DI IRONMATH.md",
+    "docs/📄 IronMath – Documento Tecnico per Collaborazione Full-Stack & AI.pdf",
     "src/js/utilitaValidazione.js",
     "src/js/statoApplicazione.js",
     "src/js/riferimentiDom.js",
-    "src/js/renderizzaUnita.js",
-    "src/js/renderizzaHome.js",
-    "src/js/renderizzaEsercizio.js",
     "programma/medie/1a media/N3_Relazioni e Funzioni/UD1/L2 -  Dalle formule alle equazioni - il vero significato dell’uguale.md",
     "programma/medie/1a media/programma1media.md",
     "programma/medie/1a media/N4_Dati/UD2/L1 – Eventi certi, possibili e impossibili (introduzione alla probabilità).md",
@@ -220,7 +221,6 @@
     "programma/medie/1a media/N4_Dati/UD1/L3 – Come si costruisce un diagramma a barre a partire da una tabella.md",
     "programma/medie/1a media/N4_Dati/UD1/L2 – I diagrammi - come rappresentiamo i dati (dalla 1ª media fino all’università).md",
     "programma/medie/1a media/N4_Dati/UD1/L1 - Che cosa sono i dati e come si raccolgono (Statistica di base).md",
-    "programma/medie/1a media/N1_Nucleo_Numeri/UD3/L4 - Come trasformare un problema in un’espressione numerica.md",
-    "programma/medie/1a media/N3_Relazioni e Funzioni/UD1/L3 – Come ottenere tutte le formule inverse dei poligoni partendo dai perimetri standard.md"
+    "programma/medie/1a media/N1_Nucleo_Numeri/UD3/L4 - Come trasformare un problema in un’espressione numerica.md"
   ]
 }
