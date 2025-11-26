@@ -1,98 +1,21 @@
+// Form e pagine collegate all'account utente.
+import { appElement } from "./riferimentiDom.js";
 import { state } from "./statoApplicazione.js";
 import {
-  appElement,
-  authButton,
-  authButtonLabel,
-  authDropdown,
-} from "./riferimentiDom.js";
-import {
-  ottieniUtenti,
-  salvaUtenti,
-  trovaUtentePerIdentificativo,
-  impostaUtenteCorrente,
-  ottieniUtenteCorrente,
-  disconnettiUtenteCorrente,
-  impostaRicordami,
-  leggiRicordami,
-  leggiCredenzialiMemorizzate,
-} from "./gestioneUtenti.js";
-import {
-  normalizzaTelefono,
-  validaEmail,
-  validaTelefono,
-  sanificaHtml,
-} from "./utilitaValidazione.js";
-import { mostraAlertGlobale, mostraModal } from "./componentiInterfaccia.js";
+  getUsers,
+  saveUsers,
+  getCurrentUser,
+  setCurrentUser,
+  findUserByUsernameOrEmail,
+  setRememberMe,
+  getRememberMe,
+  getRememberedCredentials,
+} from "./storageUtente.js";
+import { showGlobalAlert, showModal } from "./alertModal.js";
+import { navigateTo } from "./visteRouter.js";
+import { validateEmail, validatePhone, escapeHtml, normalizePhone } from "./helpersValidazione.js";
 
-export function aggiornaBottoneAutenticazione() {
-  const currentUser = ottieniUtenteCorrente();
-  if (authButtonLabel) {
-    authButtonLabel.textContent = currentUser
-      ? `Buono studio, ${currentUser.nome}`
-      : "Registrati/Accedi";
-  }
-}
-
-export function inizializzaNavigazioneAuth({ aggiornaVista }) {
-  if (!authButton || !authDropdown) return;
-
-  authButton.addEventListener("click", (event) => {
-    event.stopPropagation();
-    const currentUser = ottieniUtenteCorrente();
-    if (!currentUser) {
-      chiudiDropdownAuth();
-      if (ottieniUtenti().length === 0) {
-        state.currentView = "register";
-      } else {
-        state.currentView = "login";
-      }
-      aggiornaVista();
-      return;
-    }
-    toggleDropdownAuth();
-  });
-
-  authDropdown.addEventListener("click", (event) => {
-    const actionBtn = event.target.closest("button[data-action]");
-    if (!actionBtn) return;
-    const { action } = actionBtn.dataset;
-    chiudiDropdownAuth();
-    if (action === "profile") {
-      state.currentView = "profile";
-      aggiornaVista();
-    } else if (action === "logout") {
-      mostraModalLogout({ aggiornaVista });
-    }
-  });
-
-  document.addEventListener("click", (event) => {
-    if (
-      authDropdown.classList.contains("open") &&
-      !authDropdown.contains(event.target) &&
-      !authButton.contains(event.target)
-    ) {
-      chiudiDropdownAuth();
-    }
-  });
-
-  aggiornaBottoneAutenticazione();
-}
-
-function toggleDropdownAuth() {
-  if (!authDropdown || !authButton) return;
-  const isOpen = authDropdown.classList.toggle("open");
-  authDropdown.setAttribute("aria-hidden", String(!isOpen));
-  authButton.setAttribute("aria-expanded", String(isOpen));
-}
-
-function chiudiDropdownAuth() {
-  if (!authDropdown || !authButton) return;
-  authDropdown.classList.remove("open");
-  authDropdown.setAttribute("aria-hidden", "true");
-  authButton.setAttribute("aria-expanded", "false");
-}
-
-export function renderizzaModuloRegistrazione({ aggiornaVista, mostraAlert }) {
+export function renderRegisterForm() {
   state.currentView = "register";
   appElement.innerHTML = `
     <section class="im-card auth-card max-w-3xl mx-auto mt-4">
@@ -171,16 +94,13 @@ export function renderizzaModuloRegistrazione({ aggiornaVista, mostraAlert }) {
 
   document
     .getElementById("register-form")
-    .addEventListener("submit", (event) =>
-      gestisciSubmitRegistrazione(event, { mostraAlert, aggiornaVista })
-    );
+    .addEventListener("submit", handleRegisterSubmit);
   document.getElementById("login-link").addEventListener("click", () => {
-    state.currentView = "login";
-    aggiornaVista();
+    navigateTo("login");
   });
 }
 
-function gestisciSubmitRegistrazione(event, { mostraAlert, aggiornaVista }) {
+function handleRegisterSubmit(event) {
   event.preventDefault();
   const formData = new FormData(event.target);
   const payload = {
@@ -188,16 +108,16 @@ function gestisciSubmitRegistrazione(event, { mostraAlert, aggiornaVista }) {
     cognome: (formData.get("cognome") || "").trim(),
     sesso: (formData.get("sesso") || "").trim(),
     email: (formData.get("email") || "").trim(),
-    telefono: normalizzaTelefono((formData.get("telefono") || "").trim()),
+    telefono: normalizePhone((formData.get("telefono") || "").trim()),
     citta: (formData.get("citta") || "").trim(),
     username: (formData.get("username") || "").trim(),
     password: formData.get("password"),
   };
   const confirmPassword = formData.get("confirmPassword");
 
-  const validationError = validaRegistrazione(payload, confirmPassword);
+  const validationError = validateRegistration(payload, confirmPassword);
   if (validationError) {
-    mostraAlert(validationError, "error");
+    showGlobalAlert(validationError, "error");
     return;
   }
 
@@ -206,26 +126,25 @@ function gestisciSubmitRegistrazione(event, { mostraAlert, aggiornaVista }) {
     id: Date.now().toString(),
     createdAt: new Date().toISOString(),
   };
-  const users = ottieniUtenti();
+  const users = getUsers();
   users.push(newUser);
-  salvaUtenti(users);
+  saveUsers(users);
 
-  mostraAlert(
+  showGlobalAlert(
     "Registrazione completata con successo! Ora effettua il login per accedere al tuo account.",
     "success"
   );
-  state.currentView = "login";
-  aggiornaVista();
+  navigateTo("login");
 }
 
-function validaRegistrazione(payload, confirmPassword) {
-  const users = ottieniUtenti();
+function validateRegistration(payload, confirmPassword) {
+  const users = getUsers();
   if (!payload.nome) return "Il nome è obbligatorio.";
   if (!payload.cognome) return "Il cognome è obbligatorio.";
   if (!payload.sesso) return "Seleziona il sesso.";
-  if (!payload.email || !validaEmail(payload.email))
+  if (!payload.email || !validateEmail(payload.email))
     return "Inserisci un'email valida.";
-  if (!validaTelefono(payload.telefono))
+  if (!validatePhone(payload.telefono))
     return "Inserisci un numero di cellulare valido.";
   if (!payload.citta) return "La città è obbligatoria.";
   if (!payload.username)
@@ -241,10 +160,10 @@ function validaRegistrazione(payload, confirmPassword) {
   return null;
 }
 
-export function renderizzaModuloLogin({ aggiornaVista, mostraAlert }) {
+export function renderLoginForm() {
   state.currentView = "login";
-  const rememberFlag = leggiRicordami();
-  const rememberedCredentials = leggiCredenzialiMemorizzate();
+  const rememberFlag = getRememberMe();
+  const rememberedCredentials = getRememberedCredentials();
   const identifierValue =
     rememberFlag && rememberedCredentials
       ? rememberedCredentials.identifier
@@ -265,7 +184,7 @@ export function renderizzaModuloLogin({ aggiornaVista, mostraAlert }) {
             name="identifier"
             type="text"
             required
-            value="${sanificaHtml(identifierValue)}"
+            value="${escapeHtml(identifierValue)}"
           />
         </div>
         <div>
@@ -276,7 +195,7 @@ export function renderizzaModuloLogin({ aggiornaVista, mostraAlert }) {
             name="password"
             type="password"
             required
-            value="${sanificaHtml(passwordValue)}"
+            value="${escapeHtml(passwordValue)}"
           />
         </div>
         <label class="flex items-center gap-2 text-sm text-gray-300">
@@ -296,56 +215,49 @@ export function renderizzaModuloLogin({ aggiornaVista, mostraAlert }) {
 
   document
     .getElementById("login-form")
-    .addEventListener("submit", (event) =>
-      gestisciSubmitLogin(event, { mostraAlert, aggiornaVista })
-    );
+    .addEventListener("submit", handleLoginSubmit);
   document.getElementById("register-link").addEventListener("click", () => {
-    state.currentView = "register";
-    aggiornaVista();
+    navigateTo("register");
   });
 }
 
-function gestisciSubmitLogin(event, { mostraAlert, aggiornaVista }) {
+function handleLoginSubmit(event) {
   event.preventDefault();
   const formData = new FormData(event.target);
-  const identifier = (formData.get("identifier") || "").trim();
+  const identifier = formData.get("identifier").trim();
   const password = formData.get("password");
 
   if (!identifier || !password) {
-    mostraAlert("Inserisci username/email e password.", "error");
+    showGlobalAlert("Inserisci username/email e password.", "error");
     return;
   }
 
-  const user = trovaUtentePerIdentificativo(identifier);
+  const user = findUserByUsernameOrEmail(identifier);
   if (!user) {
-    mostraAlert("Utente non trovato.", "error");
+    showGlobalAlert("Utente non trovato.", "error");
     return;
   }
   if (user.password !== password) {
-    mostraAlert("Password errata.", "error");
+    showGlobalAlert("Password errata.", "error");
     return;
   }
 
-  impostaUtenteCorrente(user.id);
+  setCurrentUser(user.id);
   const remember = formData.get("remember") === "on";
   if (remember) {
-    impostaRicordami(true, { identifier, password });
+    setRememberMe(true, { identifier, password });
   } else {
-    impostaRicordami(false);
+    setRememberMe(false);
   }
-  aggiornaBottoneAutenticazione();
-  chiudiDropdownAuth();
-  mostraAlert(`Bentornato, ${user.nome}!`, "success");
-  state.currentView = "home";
-  aggiornaVista();
+  showGlobalAlert(`Bentornato, ${user.nome}!`, "success");
+  navigateTo("home");
 }
 
-export function renderizzaProfiloUtente({ aggiornaVista, mostraAlert }) {
-  const currentUser = ottieniUtenteCorrente();
+export function renderProfilePage() {
+  const currentUser = getCurrentUser();
   if (!currentUser) {
-    mostraAlert("Devi accedere per visualizzare il profilo.", "error");
-    state.currentView = "login";
-    aggiornaVista();
+    showGlobalAlert("Devi accedere per visualizzare il profilo.", "error");
+    navigateTo("login");
     return;
   }
 
@@ -355,13 +267,19 @@ export function renderizzaProfiloUtente({ aggiornaVista, mostraAlert }) {
       <p class="im-tagline">Profilo utente</p>
       <h2 class="im-title">Gestione profilo</h2>
       <form id="profile-form" class="mt-6 grid gap-4 md:grid-cols-2">
-        ${campoProfilo("Nome", "nome", currentUser.nome)}
-        ${campoProfilo("Cognome", "cognome", currentUser.cognome)}
-        ${campoProfilo("Sesso", "sesso", currentUser.sesso)}
-        ${campoProfilo("Email", "email", currentUser.email, "email")}
-        ${campoProfilo("Telefono", "telefono", currentUser.telefono)}
-        ${campoProfilo("Città", "citta", currentUser.citta)}
-        ${campoProfilo("Username", "username", currentUser.username, "text", true)}
+        ${profileField("Nome", "nome", currentUser.nome)}
+        ${profileField("Cognome", "cognome", currentUser.cognome)}
+        ${profileField("Sesso", "sesso", currentUser.sesso)}
+        ${profileField("Email", "email", currentUser.email, "email")}
+        ${profileField("Telefono", "telefono", currentUser.telefono)}
+        ${profileField("Città", "citta", currentUser.citta)}
+        ${profileField(
+          "Username",
+          "username",
+          currentUser.username,
+          "text",
+          true
+        )}
       </form>
       <div class="mt-6 flex flex-wrap gap-3">
         <button type="button" class="im-button secondary" id="back-home-btn">
@@ -385,41 +303,39 @@ export function renderizzaProfiloUtente({ aggiornaVista, mostraAlert }) {
     </section>
   `;
 
-  impostaProfiloModificabile(false);
+  setProfileEditable(false);
   document
     .getElementById("back-home-btn")
-    .addEventListener("click", () => {
-      state.currentView = "home";
-      aggiornaVista();
-    });
+    .addEventListener("click", () => navigateTo("home"));
   document
     .getElementById("edit-profile-btn")
-    .addEventListener("click", () =>
-      gestisciModificaProfilo(currentUser, { mostraAlert })
-    );
+    .addEventListener("click", () => handleProfileEdit(currentUser));
   document
     .getElementById("save-profile-btn")
-    .addEventListener("click", () =>
-      gestisciSalvataggioProfilo(currentUser, { mostraAlert, aggiornaVista })
-    );
+    .addEventListener("click", () => handleProfileSave(currentUser));
   document.querySelectorAll(".profile-links .im-link-button").forEach((btn) => {
     btn.addEventListener("click", () => {
       if (btn.dataset.legal === "terms") {
-        state.currentView = "terms";
+        navigateTo("terms");
       } else {
-        state.currentView = "privacy";
+        navigateTo("privacy");
       }
-      aggiornaVista();
     });
   });
 }
 
-function campoProfilo(label, name, value, type = "text", readOnlyForced = false) {
+function profileField(
+  label,
+  name,
+  value,
+  type = "text",
+  readOnlyForced = false
+) {
   const fieldId = `profile-${name}`;
   const readonlyAttr = readOnlyForced
     ? "readonly"
     : 'readonly data-editable="true"';
-  const safeValue = sanificaHtml(value ?? "");
+  const safeValue = escapeHtml(value ?? "");
   return `
     <div>
       <label class="im-label" for="${fieldId}">${label}</label>
@@ -435,7 +351,7 @@ function campoProfilo(label, name, value, type = "text", readOnlyForced = false)
   `;
 }
 
-function impostaProfiloModificabile(enabled) {
+function setProfileEditable(enabled) {
   const form = document.getElementById("profile-form");
   if (!form) return;
   form.querySelectorAll("[data-editable]").forEach((input) => {
@@ -448,8 +364,8 @@ function impostaProfiloModificabile(enabled) {
   }
 }
 
-function gestisciModificaProfilo(currentUser, { mostraAlert }) {
-  mostraModal({
+function handleProfileEdit(currentUser) {
+  showModal({
     title: "Modifica profilo",
     message:
       "Inserisci la tua password attuale per poter modificare i dati del profilo.",
@@ -462,20 +378,20 @@ function gestisciModificaProfilo(currentUser, { mostraAlert }) {
     onConfirm: () => {
       const passwordInput = document.getElementById("modal-password");
       if (!passwordInput || !passwordInput.value) {
-        mostraAlert("Inserisci la password.", "error");
+        showGlobalAlert("Inserisci la password.", "error");
         return false;
       }
       if (passwordInput.value !== currentUser.password) {
-        mostraAlert("Password errata.", "error");
+        showGlobalAlert("Password errata.", "error");
         return false;
       }
-      impostaProfiloModificabile(true);
+      setProfileEditable(true);
       return true;
     },
   });
 }
 
-function gestisciSalvataggioProfilo(currentUser, { mostraAlert, aggiornaVista }) {
+function handleProfileSave(currentUser) {
   const form = document.getElementById("profile-form");
   if (!form) return;
   const formData = new FormData(form);
@@ -485,63 +401,39 @@ function gestisciSalvataggioProfilo(currentUser, { mostraAlert, aggiornaVista })
     cognome: (formData.get("cognome") || "").trim(),
     sesso: (formData.get("sesso") || "").trim(),
     email: (formData.get("email") || "").trim(),
-    telefono: normalizzaTelefono((formData.get("telefono") || "").trim()),
+    telefono: normalizePhone((formData.get("telefono") || "").trim()),
     citta: (formData.get("citta") || "").trim(),
   };
 
-  const error = validaAggiornamentoProfilo(updatedUser);
+  const error = validateProfileUpdate(updatedUser);
   if (error) {
-    mostraAlert(error, "error");
+    showGlobalAlert(error, "error");
     return;
   }
 
-  const users = ottieniUtenti().map((user) =>
+  const users = getUsers().map((user) =>
     user.id === currentUser.id ? updatedUser : user
   );
-  salvaUtenti(users);
-  impostaProfiloModificabile(false);
-  aggiornaBottoneAutenticazione();
-  mostraAlert("Profilo aggiornato con successo.", "success");
-  state.currentView = "profile";
-  aggiornaVista();
+  saveUsers(users);
+  setProfileEditable(false);
+  showGlobalAlert("Profilo aggiornato con successo.", "success");
+  renderProfilePage();
 }
 
-function validaAggiornamentoProfilo(user) {
+function validateProfileUpdate(user) {
   if (!user.nome) return "Il nome è obbligatorio.";
   if (!user.cognome) return "Il cognome è obbligatorio.";
-  if (!user.email || !validaEmail(user.email))
+  if (!user.email || !validateEmail(user.email))
     return "Inserisci un'email valida.";
-  if (!validaTelefono(user.telefono))
+  if (!validatePhone(user.telefono))
     return "Inserisci un numero di cellulare valido.";
   if (!user.citta) return "La città è obbligatoria.";
   return null;
 }
 
-function mostraModalLogout({ aggiornaVista }) {
-  const remember = leggiRicordami();
-  mostraModal({
-    title: "Logout",
-    message: remember
-      ? "Sei sicuro di voler effettuare il logout? Hai selezionato 'ricordami' durante il login: i tuoi dati di accesso sono salvati in questa sessione."
-      : "Sei sicuro di voler effettuare il logout?",
-    confirmText: "Conferma logout",
-    cancelText: "Annulla",
-    onConfirm: () => {
-      disconnettiUtenteCorrente();
-      impostaRicordami(false);
-      aggiornaBottoneAutenticazione();
-      state.currentView = "home";
-      aggiornaVista();
-      mostraAlertGlobale("Logout completato.", "success");
-      return true;
-    },
-  });
-}
-
-export function renderizzaTerminiLegali({ aggiornaVista }) {
-  if (!ottieniUtenteCorrente()) {
-    state.currentView = "login";
-    aggiornaVista();
+export function renderTermsPage() {
+  if (!getCurrentUser()) {
+    navigateTo("login");
     return;
   }
   state.currentView = "terms";
@@ -589,22 +481,15 @@ export function renderizzaTerminiLegali({ aggiornaVista }) {
 
   document
     .getElementById("back-to-profile-terms")
-    .addEventListener("click", () => {
-      state.currentView = "profile";
-      aggiornaVista();
-    });
+    .addEventListener("click", () => navigateTo("profile"));
   document
     .getElementById("go-privacy")
-    .addEventListener("click", () => {
-      state.currentView = "privacy";
-      aggiornaVista();
-    });
+    .addEventListener("click", () => navigateTo("privacy"));
 }
 
-export function renderizzaPrivacyLegale({ aggiornaVista }) {
-  if (!ottieniUtenteCorrente()) {
-    state.currentView = "login";
-    aggiornaVista();
+export function renderPrivacyPage() {
+  if (!getCurrentUser()) {
+    navigateTo("login");
     return;
   }
   state.currentView = "privacy";
@@ -648,14 +533,8 @@ export function renderizzaPrivacyLegale({ aggiornaVista }) {
 
   document
     .getElementById("back-to-profile-privacy")
-    .addEventListener("click", () => {
-      state.currentView = "profile";
-      aggiornaVista();
-    });
+    .addEventListener("click", () => navigateTo("profile"));
   document
     .getElementById("go-terms")
-    .addEventListener("click", () => {
-      state.currentView = "terms";
-      aggiornaVista();
-    });
+    .addEventListener("click", () => navigateTo("terms"));
 }

@@ -4,22 +4,26 @@
     <meta charset="UTF-8" />
     <title>IronMath - Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/png" href="assets/imgs/favicon.png" />
+    <link rel="icon" type="image/png" href="../assets/imgs/favicon.png" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="css/base.css" />
-    <link rel="stylesheet" href="css/header.css" />
-    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/header.css" />
+    <link rel="stylesheet" href="../css/main.css" />
   </head>
+
   <body>
+    <!-- HEADER PRINCIPALE -->
     <header class="im-header">
+      <!-- LOGO -->
       <a href="#" class="home-logo-shortcut">
         <img
           class="logo-img"
-          src="assets/imgs/navbar-logo.png"
+          src="../assets/imgs/favicon.png"
           alt="IronMath Logo"
         />
         <span class="logo-text">IronMath</span>
       </a>
+      <!-- BARRA DI RICERCA LLM PER DESKTOP -->
       <div class="prompt-bar" role="search">
         <input
           type="text"
@@ -31,11 +35,13 @@
           Invia
         </button>
       </div>
+      <!-- BOTTONE HAMBURGER SOLO PER MOBILE -->
       <button class="hamburger-btn" id="hamburger-btn" type="button" aria-label="Menu" aria-expanded="false">
         <span class="hamburger-line"></span>
         <span class="hamburger-line"></span>
         <span class="hamburger-line"></span>
       </button>
+      <!-- BARRA DI RICERCA LLM PER MOBILE -->
       <nav class="nav" id="nav-menu">
         <div class="mobile-search-wrapper">
           <div class="prompt-bar prompt-bar-mobile">
@@ -53,7 +59,7 @@
         <button class="nav-btn" type="button">
           <span class="nav-label">Manifesto</span>
           <img
-            src="assets/icons/manifesto.png"
+            src="../assets/icons/manifesto.png"
             alt="Icona Manifesto"
             class="nav-icon"
           />
@@ -61,58 +67,28 @@
         <button class="nav-btn" type="button">
           <span class="nav-label">Dashboard</span>
           <img
-            src="assets/icons/dashboard.png"
+            src="../assets/icons/dashboard.png"
             alt="Icona Dashboard"
             class="nav-icon"
           />
         </button>
-        <div class="nav-auth-wrapper">
-          <button
-            class="nav-btn nav-account-btn"
-            id="auth-btn"
-            type="button"
-            aria-expanded="false"
-          >
-            <span class="nav-label" id="auth-btn-label">Registrati/Accedi</span>
-            <img
-              src="assets/icons/account.png"
-              alt="Icona Account"
-              class="nav-icon"
-            />
-          </button>
-          <div
-            class="auth-dropdown"
-            id="auth-dropdown"
-            role="menu"
-            aria-hidden="true"
-          >
-            <button
-              class="auth-dropdown-item"
-              data-action="profile"
-              type="button"
-            >
-              Gestione profilo
-            </button>
-            <button
-              class="auth-dropdown-item"
-              data-action="logout"
-              type="button"
-            >
-              Logout
-            </button>
-          </div>
-        </div>
       </nav>
     </header>
 
-    <main class="im-main" id="app">
-      <!-- Qui verrà iniettato il contenuto da app.js -->
-    </main>
+    <div class="layout-container">
+      <aside class="sidebar-left"></aside>
+
+      <main class="im-main" id="app">
+        <!-- Il contenuto dinamico viene gestito da app.js -->
+      </main>
+
+      <aside class="sidebar-right"></aside>
+    </div>
 
     <footer class="im-footer">
       <span>© 2025 IronMath - Learning Armor</span>
     </footer>
 
-    <script src="app.js"></script>
+    <script type="module" src="../js/main.js"></script>
   </body>
 </html>

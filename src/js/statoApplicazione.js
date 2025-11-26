@@ -1,10 +1,13 @@
+// Definisce e condivide lo stato globale dell'applicazione.
 export const state = {
-  schoolLevel: null,
-  profile: null,
-  currentView: "home",
-  currentStep: 0,
+  schoolLevel: null, // classe scolastica selezionata
+  profile: null, // profilo "forte" oppure "difficolta"
+  currentView: "home", // vista attuale renderizzata
+  currentStep: 0, // passo corrente nel percorso demo esercizi
+  registrazioneStudente: creaStatoRegistrazioneStudente(), // snapshot della procedura di registrazione
 };
 
+// Chiavi care alla persistenza locale/sessione.
 export const STORAGE_KEYS = {
   USERS: "ironmathUsers",
   CURRENT_USER: "ironmathCurrentUserId",
@@ -12,6 +15,17 @@ export const STORAGE_KEYS = {
   REMEMBERED_LOGIN: "ironmathRememberedLogin",
 };
 
+// Factory per riportare allo stato iniziale il flusso di registrazione.
+export function creaStatoRegistrazioneStudente() {
+  return {
+    classeSelezionata: null,
+    motivazioneSelezionata: null,
+    step: 1,
+    isMinor: null,
+  };
+}
+
+// Sequenza utilizzata dalla demo esercizio passo-passo.
 export const steps = [
   {
     title: "Step 1 – Capire il testo",

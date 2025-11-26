@@ -1,6 +1,7 @@
-let modalAttivo = null;
+// Gestione centralizzata di alert globali e modali custom.
+let activeModal = null;
 
-export function mostraAlertGlobale(messaggio, tipo = "info") {
+export function showGlobalAlert(message, type = "info") {
   let container = document.getElementById("global-alert-container");
   if (!container) {
     container = document.createElement("div");
@@ -9,8 +10,8 @@ export function mostraAlertGlobale(messaggio, tipo = "info") {
     document.body.prepend(container);
   }
   container.innerHTML = `
-    <div class="global-alert global-alert-${tipo}">
-      <span>${messaggio}</span>
+    <div class="global-alert global-alert-${type}">
+      <span>${message}</span>
       <button type="button" aria-label="Chiudi avviso">&times;</button>
     </div>
   `;
@@ -20,7 +21,7 @@ export function mostraAlertGlobale(messaggio, tipo = "info") {
   });
 }
 
-export function mostraModal({
+export function showModal({
   title,
   message = "",
   contentHTML = "",
@@ -29,7 +30,7 @@ export function mostraModal({
   onConfirm,
   onCancel,
 }) {
-  chiudiModal();
+  closeModal();
   const overlay = document.createElement("div");
   overlay.className = "im-modal-overlay";
   overlay.innerHTML = `
@@ -45,30 +46,30 @@ export function mostraModal({
   `;
   document.body.appendChild(overlay);
   document.body.classList.add("blurred");
-  modalAttivo = overlay;
+  activeModal = overlay;
 
   overlay.addEventListener("click", (event) => {
     if (event.target === overlay) {
       if (onCancel) onCancel();
-      chiudiModal();
+      closeModal();
     }
   });
   overlay.querySelector(".modal-cancel").addEventListener("click", () => {
     if (onCancel) onCancel();
-    chiudiModal();
+    closeModal();
   });
   overlay.querySelector(".modal-confirm").addEventListener("click", () => {
     const shouldClose = onConfirm ? onConfirm() : true;
     if (shouldClose !== false) {
-      chiudiModal();
+      closeModal();
     }
   });
 }
 
-export function chiudiModal() {
-  if (modalAttivo) {
-    modalAttivo.remove();
-    modalAttivo = null;
+export function closeModal() {
+  if (activeModal) {
+    activeModal.remove();
+    activeModal = null;
   }
   document.body.classList.remove("blurred");
 }
