@@ -1,0 +1,46 @@
+/* FILESYSTEM TREE */
+
+.filesystem-panel {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+.filesystem-panel::-webkit-scrollbar {
+  width: 6px;
+}
+
+.filesystem-panel::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+}
+
+.filesystem-tree {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.filesystem-tree ul {
+  list-style: none;
+  margin: 6px 0 0;
+  padding-left: 18px;
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.filesystem-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--im-muted);
+  padding: 2px 0;
+}
+
+.filesystem-item.is-root {
+  font-weight: 600;
+  color: var(--im-text);
+}

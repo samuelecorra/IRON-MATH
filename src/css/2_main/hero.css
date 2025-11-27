@@ -1,0 +1,57 @@
+/* HERO SECTION */
+
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&display=swap");
+
+.hero {
+  text-align: center;
+  padding: 0 clamp(12px, 4vw, 36px) 20px;
+  margin-bottom: 8px;
+}
+
+.hero-tag {
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--im-accent);
+  margin: 0 0 8px;
+}
+
+.hero-title {
+  margin: 0;
+  font-size: clamp(30px, 5vw, 48px);
+  font-family: "Orbitron", "Segoe UI", sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: linear-gradient(
+    115deg,
+    #ffe599,
+    #ffcc4d 35%,
+    #ffdc85 65%,
+    #fff8d1
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  text-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+  position: relative;
+}
+
+.hero-title::after {
+  content: "";
+  display: block;
+  width: min(200px, 45%);
+  height: 3px;
+  margin: 16px auto 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, #ffdc85, transparent);
+  box-shadow: 0 0 12px rgba(255, 220, 133, 0.6);
+}
+
+.hero-subtitle {
+  max-width: 840px;
+  margin: 12px auto 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--im-muted);
+}

@@ -1,0 +1,209 @@
+/* BUTTON SYSTEM */
+
+/* Wizard footer defaults to stacked column on small widths */
+.wizard-footer {
+  margin-top: 24px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.wizard-footer.split {
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media (min-width: 640px) {
+  .wizard-footer.split {
+    grid-template-columns: minmax(140px, max-content) minmax(200px, max-content);
+  }
+}
+
+.wizard-footer.center {
+  grid-template-columns: 1fr;
+  justify-items: center;
+}
+
+.wizard-footer .btn-prev-step {
+  justify-self: start;
+}
+
+.wizard-footer .btn-register,
+.wizard-footer .btn-next-step {
+  grid-column: auto;
+  justify-self: end;
+}
+
+.btn-next-step,
+.btn-prev-step {
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--im-text);
+  padding: 12px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  min-height: 50px;
+  min-width: 160px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-next-step {
+  background: linear-gradient(
+    135deg,
+    var(--im-primary),
+    var(--im-primary-soft)
+  );
+  border: none;
+  color: #050509;
+}
+
+.btn-next-step:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-prev-step:hover,
+.btn-next-step:not(:disabled):hover {
+  transform: translateY(-1px);
+  border-color: var(--im-accent);
+  color: var(--im-accent);
+}
+
+.link-legal {
+  border: none;
+  background: none;
+  color: var(--im-accent);
+  text-decoration: underline;
+  cursor: pointer;
+  font: inherit;
+  padding: 0;
+}
+
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.button-group.stacked {
+  flex-direction: column;
+}
+
+.btn-pill {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--im-text);
+  padding: 12px 18px;
+  font-size: 15px;
+  font-weight: 500;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.btn-pill:hover {
+  border-color: var(--im-accent);
+  transform: translateY(-1px);
+}
+
+.btn-pill.active {
+  border-color: var(--im-accent);
+  background: rgba(255, 202, 40, 0.1);
+  box-shadow: 0 0 0 1px rgba(255, 202, 40, 0.25);
+}
+
+.secondary-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.btn-secondary {
+  flex: 1 1 220px;
+  border-radius: 12px;
+  border: 1px dashed rgba(255, 255, 255, 0.25);
+  background: transparent;
+  color: var(--im-muted);
+  padding: 12px 20px;
+  text-align: left;
+  transition: border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-secondary:hover {
+  border-color: var(--im-accent);
+  color: var(--im-accent);
+  transform: translateY(-1px);
+}
+
+.btn-register {
+  border: none;
+  border-radius: 999px;
+  padding: 12px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  min-height: 52px;
+  min-width: 190px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    135deg,
+    var(--im-primary),
+    var(--im-primary-soft)
+  );
+  color: #050509;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.btn-register:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-register:not(:disabled):hover {
+  transform: translateY(-1px);
+}
+
+.btn-post-register {
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--im-text);
+  padding: 16px 20px;
+  font-size: 15px;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-post-register:hover {
+  border-color: var(--im-accent);
+  transform: translateY(-1px);
+}
+
+.btn-post-register.ghost {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+@media (max-width: 720px) {
+  .button-group {
+    flex-direction: column;
+  }
+
+  .btn-pill,
+  .btn-secondary,
+  .btn-post-register {
+    width: 100%;
+  }
+}

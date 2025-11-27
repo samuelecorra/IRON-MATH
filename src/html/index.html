@@ -6,15 +6,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" href="../assets/imgs/favicon.png" />
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Stili base comuni a tutta l'app -->
     <link rel="stylesheet" href="../css/base.css" />
-    <link rel="stylesheet" href="../css/header.css" />
-    <link rel="stylesheet" href="../css/main.css" />
+
+    <!-- Stili specifici per l'header come contenitore -->
+    <link rel="stylesheet" href="../css/1_header/1_header.css" />
+
+    <!-- Stili specifici per i componenti interni dell'header -->
+    <link rel="stylesheet" href="../css/1_header/2_sc-logo.css" />
+    <link rel="stylesheet" href="../css/1_header/3_navbar.css" />
+    <link rel="stylesheet" href="../css/1_header/4_hamburger-menu.css" />
+
+    <!-- Stili specifici per il main come contenitore -->
+    <link rel="stylesheet" href="../css/2_main/main.css" />
+    <link rel="stylesheet" href="../css/2_main/main-buttons.css" />
+    <link rel="stylesheet" href="../css/2_main/hero.css" />
+    <link rel="stylesheet" href="../css/2_main/sidebars.css" />
+    <link rel="stylesheet" href="../css/2_main/filesystem.css" />
+    <link rel="stylesheet" href="../css/2_main/maincards.css" />
+
+    <!-- Stili specifici per il footer -->
+    <link rel="stylesheet" href="../css/3_footer/footer.css" />
   </head>
 
   <body>
-    <!-- HEADER PRINCIPALE -->
+    <!-- La landing page è l'unico entry point della Web App di IronMath:
+     Questo implica che l'utente ci giunge sempre da non autenticato. -->
+
+    <!-- HEADER PRINCIPALE - è un unico tag sia per l'header mobile che per quello desktop -->
     <header class="im-header">
-      <!-- LOGO -->
+      <!-- Shortcut alla Homepage (Logo come img + NomeSito come span)-->
       <a href="#" class="home-logo-shortcut">
         <img
           class="logo-img"
@@ -23,39 +45,20 @@
         />
         <span class="logo-text">IronMath</span>
       </a>
-      <!-- BARRA DI RICERCA LLM PER DESKTOP -->
-      <div class="prompt-bar" role="search">
-        <input
-          type="text"
-          class="prompt-input"
-          placeholder="Chiedi qualcosa a IronMath..."
-          aria-label="Prompt per IronMath"
-        />
-        <button type="button" class="prompt-submit" aria-label="Invia">
-          Invia
-        </button>
-      </div>
-      <!-- BOTTONE HAMBURGER SOLO PER MOBILE -->
-      <button class="hamburger-btn" id="hamburger-btn" type="button" aria-label="Menu" aria-expanded="false">
+      <!-- BOTTONE HAMBURGER SOLO PER MOBILE (Se desktop -> invisibile) -->
+      <button
+        class="hamburger-btn"
+        id="hamburger-btn"
+        type="button"
+        aria-label="Menu"
+        aria-expanded="false"
+      >
         <span class="hamburger-line"></span>
         <span class="hamburger-line"></span>
         <span class="hamburger-line"></span>
       </button>
-      <!-- BARRA DI RICERCA LLM PER MOBILE -->
+      <!-- NAVBAR DESKTOP -->
       <nav class="nav" id="nav-menu">
-        <div class="mobile-search-wrapper">
-          <div class="prompt-bar prompt-bar-mobile">
-            <input
-              type="text"
-              class="prompt-input"
-              placeholder="Chiedi qualcosa a IronMath..."
-              aria-label="Prompt per IronMath"
-            />
-            <button type="button" class="prompt-submit" aria-label="Invia">
-              Invia
-            </button>
-          </div>
-        </div>
         <button class="nav-btn" type="button">
           <span class="nav-label">Manifesto</span>
           <img
@@ -65,10 +68,10 @@
           />
         </button>
         <button class="nav-btn" type="button">
-          <span class="nav-label">Dashboard</span>
+          <span class="nav-label">Accedi</span>
           <img
-            src="../assets/icons/dashboard.png"
-            alt="Icona Dashboard"
+            src="../assets/icons/account.png"
+            alt="Icona Account"
             class="nav-icon"
           />
         </button>
@@ -76,13 +79,151 @@
     </header>
 
     <div class="layout-container">
-      <aside class="sidebar-left"></aside>
+      <aside class="sidebar-left">
+        <div class="sidebar-panel filesystem-panel">
+          <div class="sidebar-panel-head">
+            <p class="sidebar-panel-title">Struttura del corso</p>
+            <span class="sidebar-panel-meta">Aggiornata quotidianamente</span>
+          </div>
+          <ul class="filesystem-tree">
+            <li>
+              <span class="filesystem-item is-root">📁 Scuola media</span>
+              <ul>
+                <li>
+                  <span class="filesystem-item">📁 Prima media</span>
+                  <ul>
+                    <li>
+                      <span class="filesystem-item">📂 Nucleo 1 – Numeri</span>
+                    </li>
+                    <li>
+                      <span class="filesystem-item"
+                        >📂 Nucleo 2 – Spazio e figure</span
+                      >
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <span class="filesystem-item">📁 Seconda media</span>
+                  <ul>
+                    <li>
+                      <span class="filesystem-item"
+                        >📂 Nucleo 3 – Relazioni e funzioni</span
+                      >
+                    </li>
+                    <li>
+                      <span class="filesystem-item"
+                        >📂 Nucleo 4 – Dati e previsioni</span
+                      >
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <span class="filesystem-item">📁 Terza media</span>
+                  <ul>
+                    <li>
+                      <span class="filesystem-item"
+                        >📂 Allenamento INVALSI</span
+                      >
+                    </li>
+                    <li>
+                      <span class="filesystem-item"
+                        >📂 Percorso esame finale</span
+                      >
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <span class="filesystem-item is-root">📁 Fisica</span>
+              <ul>
+                <li>
+                  <span class="filesystem-item">📂 Modulo 1 – Meccanica</span>
+                </li>
+                <li>
+                  <span class="filesystem-item"
+                    >📂 Modulo 2 – Onde e suono</span
+                  >
+                </li>
+                <li>
+                  <span class="filesystem-item"
+                    >📂 Modulo 3 – Elettromagnetismo</span
+                  >
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </aside>
 
-      <main class="im-main" id="app">
-        <!-- Il contenuto dinamico viene gestito da app.js -->
+      <main class="im-main">
+        <section class="hero">
+          <h1 class="hero-title">☄️ Benvenuto su IronMath 🚀</h1>
+          <p class="hero-subtitle">
+            Ragazzo, siamo contento di vederti qui! Finalmente hai deciso di
+            metterti in gioco e di risollevare la tua situazione in matematica e
+            fisica. Non temere, ti guideremo finché sulla pagella non ci saranno
+            voti > 9!
+          </p>
+        </section>
+        <div id="app" class="im-main-content">
+          <!-- Il contenuto dinamico viene gestito da app.js -->
+        </div>
       </main>
 
-      <aside class="sidebar-right"></aside>
+      <aside class="sidebar-right">
+        <div class="sidebar-panel reviews-panel">
+          <p class="sidebar-panel-title">Cosa dicono gli studenti</p>
+          <div class="review-card">
+            <div class="review-header">
+              <span class="review-username">@Matteo_3A</span>
+              <span class="review-date">14/02/2025</span>
+            </div>
+            <div class="review-stars">★★★★★</div>
+            <p class="review-body">
+              Ho finalmente capito le frazioni e le equazioni in tre settimane.
+              Il tutor virtuale mi ha fatto rifare i prerequisiti finché non
+              erano solidi.
+            </p>
+          </div>
+          <div class="review-card">
+            <div class="review-header">
+              <span class="review-username">@SofiaPhysics</span>
+              <span class="review-date">02/04/2025</span>
+            </div>
+            <div class="review-stars">★★★★☆</div>
+            <p class="review-body">
+              Percorso super chiaro. Ho usato IronMath per preparare il test di
+              ingresso al liceo scientifico: esercizi mirati e report sinceri
+              sul livello reale.
+            </p>
+          </div>
+          <div class="review-card">
+            <div class="review-header">
+              <span class="review-username">@LucaTopVoti</span>
+              <span class="review-date">18/05/2025</span>
+            </div>
+            <div class="review-stars">★★★★★</div>
+            <p class="review-body">
+              Mi ha salvato dal debito in matematica. Ogni volta che sbagliavo
+              un quiz, IronMath mi mostrava subito quale prerequisito andava
+              sistemato.
+            </p>
+          </div>
+          <div class="review-card">
+            <div class="review-header">
+              <span class="review-username">@GiuliaFocus</span>
+              <span class="review-date">07/09/2025</span>
+            </div>
+            <div class="review-stars">★★★★☆</div>
+            <p class="review-body">
+              Sto usando il modulo di fisica per allenarmi sulla meccanica. Mi
+              piace perché ogni step è collegato al diario di studio e vedo i
+              progressi reali.
+            </p>
+          </div>
+        </div>
+      </aside>
     </div>
 
     <footer class="im-footer">

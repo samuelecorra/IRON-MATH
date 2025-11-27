@@ -21,7 +21,19 @@ export function creaStatoRegistrazioneStudente() {
     classeSelezionata: null,
     motivazioneSelezionata: null,
     step: 1,
+    view: "wizard",
     isMinor: null,
+    formValues: {
+      username: "",
+      dob: "",
+      school: "",
+      studentEmail: "",
+      parentEmail: "",
+      password: "",
+      confirmPassword: "",
+      terms: false,
+      privacy: false,
+    },
   };
 }
 

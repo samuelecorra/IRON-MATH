@@ -1,5 +1,6 @@
 /* StyleSheet di base */
 
+/* Tutti i colori, font e variabili globali */
 :root {
   --im-bg: #050509;
   --im-bg-alt: #101018;
@@ -15,18 +16,24 @@
     sans-serif;
 }
 
+/* Il box sizing globale deve essere border-box, ovvero i padding e i bordi
+   sono inclusi nella larghezza e altezza degli elementi */
 * {
   box-sizing: border-box;
 }
 
 body {
-  margin: 0;
-  font-family: var(--im-font);
-  background: radial-gradient(circle at top, #1a1a2e 0, #050509 55%);
-  color: var(--im-text);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  margin: 0; /* Rimuovi il margin di default del body */
+  font-family: var(--im-font); /* Applica il font globale */
+  background: radial-gradient(
+    circle at top,
+    #1a1a2e 0,
+    #050509 55%
+  ); /* Sfondo gradiente */
+  color: var(--im-text); /* Colore del testo globale */
+  min-height: 100vh; /* Assicura che il body copra almeno l'altezza della viewport */
+  display: flex; /* Usa flexbox per il layout principale */
+  flex-direction: column; /* Disposizione verticale */
 }
 
 body.blurred header,

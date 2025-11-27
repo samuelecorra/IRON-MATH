@@ -13,132 +13,14 @@ export function renderHome() {
   state.schoolLevel = null;
   state.profile = null;
   state.registrazioneStudente = creaStatoRegistrazioneStudente();
+  state.registrazioneStudente.step = 1;
+  state.registrazioneStudente.view = "wizard";
   appElement.innerHTML = `
-    <section class="im-card hero-card">
-      <h1 class="im-title">Benvenuto in IronMath</h1>
-      <p class="im-subtitle">
-        Ragazzo, fattelo dire, bravo! Se sei qui vuol dire che hai finalmente deciso di riprendere
-        le redini della tua media in matematica e/o fisica.
-      </p>
-    </section>
-
     <section class="im-card registration-card">
-      <div class="step step-1">
-        <h2 class="step-title">Step 1 · Raccontaci chi sei</h2>
-        <p class="step-description">
-          Seleziona la classe e la situazione scolastica: il resto della registrazione apparirà automaticamente.
-        </p>
-
-        <div class="step-block">
-          <h3 class="step-subtitle">Scegli la tua classe</h3>
-          <div class="button-group">
-            <button class="btn-pill btn-class" type="button" data-class="prima">Prima media</button>
-            <button class="btn-pill btn-class" type="button" data-class="seconda">Seconda media</button>
-            <button class="btn-pill btn-class" type="button" data-class="terza">Terza media</button>
-          </div>
-        </div>
-
-        <div class="step-block">
-          <h3 class="step-subtitle">Qual è la tua situazione?</h3>
-          <div class="button-group stacked">
-            <button class="btn-pill btn-situation" type="button" data-situation="bravo">
-              Sono già bravo e voglio consolidare / eccellere
-            </button>
-            <button class="btn-pill btn-situation" type="button" data-situation="difficolta">
-              Sono in difficoltà e voglio evitare il debito / migliorare
-            </button>
-          </div>
-        </div>
-
-        <div class="secondary-links">
-          <button class="btn-secondary" type="button" data-role="docente">Sei docente? Clicca qui...</button>
-          <button class="btn-secondary" type="button" data-role="genitore">Sei genitore? Clicca qui...</button>
-        </div>
+      <div class="registration-title">
+        <h1>Registrazione Studente</h1>
       </div>
-
-      <div class="step step-2 hidden" data-step="registrazione">
-        <h2 class="step-title">Step 2 · Dati per la registrazione</h2>
-        <p class="step-description">
-          Compila i campi qui sotto: useremo questi dati per creare il tuo profilo IronMath e per avvisare il tuo tutor legale.
-        </p>
-        <form id="form-registrazione-studente" class="registration-form" novalidate>
-          <div class="form-field">
-            <label for="username">Username<span class="required">*</span></label>
-            <input class="im-input" type="text" id="username" name="username" autocomplete="nickname" required />
-          </div>
-
-          <div class="form-field">
-            <label for="dob">Data di nascita<span class="required">*</span></label>
-            <input class="im-input" type="date" id="dob" name="dob" required />
-          </div>
-
-          <div class="form-field">
-            <label for="school">Nome della scuola<span class="required">*</span></label>
-            <input class="im-input" type="text" id="school" name="school" required />
-          </div>
-
-          <div class="form-field">
-            <label for="student-email">Email dello studente<span class="required">*</span></label>
-            <input class="im-input" type="email" id="student-email" name="studentEmail" autocomplete="email" required />
-            <small class="helper-text" id="student-email-helper">
-              Preferiamo un'email scolastica: presto diventerà il canale ufficiale con i docenti.
-            </small>
-          </div>
-
-          <div class="form-field">
-            <label for="parent-email">Email del genitore/tutore</label>
-            <input class="im-input" type="email" id="parent-email" name="parentEmail" autocomplete="email" />
-            <small class="helper-text" id="parent-email-helper">
-              Inseriscila se hai meno di 18 anni: useremo questo contatto per confermare l'iscrizione.
-            </small>
-          </div>
-
-          <div class="form-field">
-            <label for="password">Password<span class="required">*</span></label>
-            <input class="im-input" type="password" id="password" name="password" autocomplete="new-password" required />
-          </div>
-
-          <div class="form-field">
-            <label for="confirm-password">Conferma password<span class="required">*</span></label>
-            <input class="im-input" type="password" id="confirm-password" name="confirmPassword" autocomplete="new-password" required />
-            <p class="helper-text error-text hidden" id="password-match-error">
-              Le password devono coincidere.
-            </p>
-          </div>
-
-          <div class="legal-checks">
-            <label class="checkbox-label">
-              <input type="checkbox" id="terms-checkbox" name="terms" />
-              <span>Ho letto e accetto Termini & Condizioni</span>
-            </label>
-            <label class="checkbox-label">
-              <input type="checkbox" id="privacy-checkbox" name="privacy" />
-              <span>Ho letto e accetto l'Informativa sulla Privacy</span>
-            </label>
-          </div>
-
-          <button type="submit" class="btn-register" disabled>Registrati</button>
-        </form>
-      </div>
-
-      <div class="step step-3 hidden" data-step="post-registrazione">
-        <h2 class="step-title">Step 3 · Registrazione completata</h2>
-        <p>
-          Controlla la casella di posta elettronica del genitore/tutore che hai indicato: dovrà confermare la tua iscrizione
-          per sbloccare l'account completo.
-        </p>
-        <p>
-          Nel frattempo puoi già esplorare IronMath con un account limitato. Ti ricorderemo di completare la procedura.
-        </p>
-        <div class="button-group stacked">
-          <button class="btn-post-register" type="button" data-action="approve">
-            Ho approvato / Il genitore approverà via email
-          </button>
-          <button class="btn-post-register ghost" type="button" data-action="limited">
-            Continua con account limitato
-          </button>
-        </div>
-      </div>
+      <div id="registration-card-content"></div>
     </section>
   `;
 
@@ -146,49 +28,439 @@ export function renderHome() {
 }
 
 function initFlussoRegistrazioneStudente() {
-  const classButtons = appElement.querySelectorAll(".btn-class");
-  const situationButtons = appElement.querySelectorAll(".btn-situation");
-  const secondaryButtons = appElement.querySelectorAll(".btn-secondary");
-  const stepTwoEl = appElement.querySelector("[data-step='registrazione']");
-  const stepThreeEl = appElement.querySelector("[data-step='post-registrazione']");
-  const formEl = document.getElementById("form-registrazione-studente");
+  renderStep1();
+}
+
+function getRegistrationCardContent() {
+  const container = document.getElementById("registration-card-content");
+  if (!container) {
+    console.error("Contenitore #registration-card-content non trovato.");
+    return null;
+  }
+  return container;
+}
+
+function renderStep1() {
+  const container = getRegistrationCardContent();
+  if (!container) return;
+  state.registrazioneStudente.step = 1;
+  state.registrazioneStudente.view = "wizard";
+
+  const classOptions = [
+    { value: "prima", label: "Prima media" },
+    { value: "seconda", label: "Seconda media" },
+    { value: "terza", label: "Terza media" },
+  ];
+
+  const situationOptions = [
+    {
+      value: "bravo",
+      label: "Sono già bravo e voglio consolidare / eccellere",
+    },
+    {
+      value: "difficolta",
+      label: "Sono in difficoltà e voglio evitare il debito / migliorare",
+    },
+  ];
+
+  const isReady = isStep1Ready();
+
+  container.innerHTML = `
+    <div class="step step-1">
+      <h2 class="step-title">Step 1 · Raccontaci chi sei</h2>
+      <p class="step-description">
+        Seleziona la classe e la situazione scolastica: il resto della registrazione apparirà automaticamente.
+      </p>
+
+      <div class="step-block">
+        <h3 class="step-subtitle">Scegli la tua classe</h3>
+        <div class="button-group">
+          ${classOptions
+            .map(
+              ({ value, label }) => `
+                <button
+                  class="btn-pill btn-class ${
+                    state.registrazioneStudente.classeSelezionata === value
+                      ? "active"
+                      : ""
+                  }"
+                  type="button"
+                  data-class="${value}"
+                  aria-pressed="${
+                    state.registrazioneStudente.classeSelezionata === value
+                  }"
+                >
+                  ${label}
+                </button>
+              `
+            )
+            .join("")}
+        </div>
+      </div>
+
+      <div class="step-block">
+        <h3 class="step-subtitle">Qual è la tua situazione?</h3>
+        <div class="button-group stacked">
+          ${situationOptions
+            .map(
+              ({ value, label }) => `
+                <button
+                  class="btn-pill btn-situation ${
+                    state.registrazioneStudente.motivazioneSelezionata === value
+                      ? "active"
+                      : ""
+                  }"
+                  type="button"
+                  data-situation="${value}"
+                  aria-pressed="${
+                    state.registrazioneStudente.motivazioneSelezionata === value
+                  }"
+                >
+                  ${label}
+                </button>
+              `
+            )
+            .join("")}
+        </div>
+      </div>
+
+      <div class="secondary-links">
+        <button class="btn-secondary" type="button" data-role="docente">Sei docente? Clicca qui...</button>
+        <button class="btn-secondary" type="button" data-role="genitore">Sei genitore? Clicca qui...</button>
+      </div>
+    </div>
+    <div class="wizard-footer">
+      <button class="btn-next-step" type="button" ${
+        isReady ? "" : "disabled"
+      }>Conferma e Prosegui</button>
+    </div>
+  `;
+
+  setupStep1Interactions(container);
+}
+
+function renderStep2() {
+  const container = getRegistrationCardContent();
+  if (!container) return;
+  state.registrazioneStudente.step = 2;
+  state.registrazioneStudente.view = "wizard";
+
+  const formValues = state.registrazioneStudente.formValues || {};
+  const isMinor = state.registrazioneStudente.isMinor;
+  if (isMinor === false && formValues.parentEmail) {
+    formValues.parentEmail = "";
+  }
+  const parentHelperText =
+    isMinor === null
+      ? "Inseriscila se hai meno di 18 anni: useremo questo contatto per confermare l'iscrizione."
+      : isMinor
+      ? "Obbligatorio per studenti sotto i 18 anni."
+      : "Hai almeno 18 anni: non serve l'email del genitore.";
+
+  const parentDisabledAttr = isMinor === false ? "disabled" : "";
+  const parentRequiredAttr = isMinor ? "required" : "";
+  const parentValue = isMinor === false ? "" : formValues.parentEmail || "";
+
+  container.innerHTML = `
+    <div class="step step-2" data-step="registrazione">
+      <h2 class="step-title">Step 2 · Dati per la registrazione</h2>
+      <p class="step-description">
+        Compila i campi qui sotto: useremo questi dati per creare il tuo profilo IronMath e per avvisare il tuo tutor legale.
+      </p>
+      <form id="form-registrazione-studente" class="registration-form" novalidate>
+        <div class="form-field">
+          <label for="username">Username<span class="required">*</span></label>
+          <input class="im-input" type="text" id="username" name="username" autocomplete="nickname" value="${escapeHtml(
+            formValues.username || ""
+          )}" required />
+        </div>
+
+        <div class="form-field">
+          <label for="dob">Data di nascita<span class="required">*</span></label>
+          <input class="im-input" type="date" id="dob" name="dob" value="${escapeHtml(
+            formValues.dob || ""
+          )}" required />
+        </div>
+
+        <div class="form-field">
+          <label for="school">Nome della scuola<span class="required">*</span></label>
+          <input class="im-input" type="text" id="school" name="school" value="${escapeHtml(
+            formValues.school || ""
+          )}" required />
+        </div>
+
+        <div class="form-field">
+          <label for="student-email">Email dello studente<span class="required">*</span></label>
+          <input class="im-input" type="email" id="student-email" name="studentEmail" autocomplete="email" value="${escapeHtml(
+            formValues.studentEmail || ""
+          )}" required />
+          <small class="helper-text" id="student-email-helper">
+            Preferiamo un'email scolastica: presto diventerà il canale ufficiale con i docenti.
+          </small>
+        </div>
+
+        <div class="form-field">
+          <label for="parent-email">Email del genitore/tutore</label>
+          <input class="im-input" type="email" id="parent-email" name="parentEmail" autocomplete="email" value="${escapeHtml(
+            parentValue
+          )}" ${parentDisabledAttr} ${parentRequiredAttr} />
+          <small class="helper-text" id="parent-email-helper">
+            ${parentHelperText}
+          </small>
+        </div>
+
+        <div class="form-field">
+          <label for="password">Password<span class="required">*</span></label>
+          <input class="im-input" type="password" id="password" name="password" autocomplete="new-password" value="${escapeHtml(
+            formValues.password || ""
+          )}" required />
+        </div>
+
+        <div class="form-field">
+          <label for="confirm-password">Conferma password<span class="required">*</span></label>
+          <input class="im-input" type="password" id="confirm-password" name="confirmPassword" autocomplete="new-password" value="${escapeHtml(
+            formValues.confirmPassword || ""
+          )}" required />
+          <p class="helper-text error-text hidden" id="password-match-error">
+            Le password devono coincidere.
+          </p>
+        </div>
+
+        <div class="legal-checks">
+          <label class="checkbox-label">
+            <input type="checkbox" id="terms-checkbox" name="terms" ${
+              formValues.terms ? "checked" : ""
+            } />
+            <span>
+              Ho letto e accetto
+              <button type="button" class="link-legal" data-legal="terms">Termini & Condizioni</button>
+            </span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="privacy-checkbox" name="privacy" ${
+              formValues.privacy ? "checked" : ""
+            } />
+            <span>
+              Ho letto e accetto
+              <button type="button" class="link-legal" data-legal="privacy">l'Informativa sulla Privacy</button>
+            </span>
+          </label>
+        </div>
+
+        <div class="wizard-footer split">
+          <button class="btn-prev-step" type="button">Indietro</button>
+          <button type="submit" class="btn-register" disabled>Conferma e Registrati</button>
+        </div>
+      </form>
+    </div>
+  `;
+
+  setupStep2Interactions(container);
+}
+
+function renderLegalView(type) {
+  const container = getRegistrationCardContent();
+  if (!container) return;
+  state.registrazioneStudente.view = type;
+  const legalContent = getLegalContent(type);
+  container.innerHTML = `
+    <div class="legal-view">
+      <h2 class="step-title">${legalContent.title}</h2>
+      ${legalContent.paragraphs
+        .map((p) => `<p class="step-description">${p}</p>`)
+        .join("")}
+      <ul>
+        ${legalContent.points.map((item) => `<li>${item}</li>`).join("")}
+      </ul>
+      <div class="wizard-footer center">
+        <button class="btn-back-to-form" type="button">Capito, torna alla registrazione</button>
+      </div>
+    </div>
+  `;
+  setupLegalViewInteractions();
+}
+
+function renderStep3() {
+  const container = getRegistrationCardContent();
+  if (!container) return;
+  state.registrazioneStudente.step = 3;
+  state.registrazioneStudente.view = "wizard";
+  container.innerHTML = `
+    <div class="step step-3" data-step="post-registrazione">
+      <h2 class="step-title">Step 3 · Registrazione completata</h2>
+      <p>
+        Controlla la casella di posta elettronica del genitore/tutore che hai indicato: dovrà confermare la tua iscrizione per sbloccare l'account completo.
+      </p>
+      <p>
+        Nel frattempo puoi già esplorare IronMath con un account limitato. Ti ricorderemo di completare la procedura.
+      </p>
+      <div class="button-group stacked">
+        <button class="btn-post-register" type="button" data-action="approve">
+          Ho approvato / Il genitore approverà via email
+        </button>
+        <button class="btn-post-register ghost" type="button" data-action="limited">
+          Continua con account limitato
+        </button>
+      </div>
+    </div>
+  `;
+  setupPostRegistrationActions(container);
+}
+
+function setupStep1Interactions(container) {
+  if (!container) return;
+  const classButtons = container.querySelectorAll(".btn-class");
+  const situationButtons = container.querySelectorAll(".btn-situation");
+  const secondaryButtons = container.querySelectorAll(".btn-secondary");
+  const nextBtn = container.querySelector(".btn-next-step");
+
+  const updateNextButtonState = () => {
+    if (!nextBtn) return;
+    nextBtn.disabled = !isStep1Ready();
+  };
 
   classButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
-      handleClassSelection(btn, classButtons, stepTwoEl);
+      handleClassSelection(btn, classButtons);
+      updateNextButtonState();
     });
   });
 
   situationButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
-      handleSituationSelection(btn, situationButtons, stepTwoEl);
+      handleSituationSelection(btn, situationButtons);
+      updateNextButtonState();
     });
   });
 
   secondaryButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
-      showGlobalAlert("Flussi dedicati a docenti e genitori in arrivo. Rimani sintonizzato!", "info");
+      showGlobalAlert(
+        "Flussi dedicati a docenti e genitori in arrivo. Rimani sintonizzato!",
+        "info"
+      );
     });
   });
 
-  setupFormValidation(formEl, stepTwoEl, stepThreeEl);
-  setupPostRegistrationActions(stepThreeEl);
+  nextBtn?.addEventListener("click", () => {
+    state.registrazioneStudente.step = 2;
+    renderStep2();
+  });
+
+  updateNextButtonState();
 }
 
-function handleClassSelection(button, group, stepTwoEl) {
+function setupStep2Interactions(container) {
+  if (!container) return;
+  const formEl = container.querySelector("#form-registrazione-studente");
+  const backBtn = container.querySelector(".btn-prev-step");
+  const legalLinks = container.querySelectorAll(".link-legal");
+
+  if (!formEl) return;
+
+  setupFormValidation(formEl);
+
+  backBtn?.addEventListener("click", () => {
+    persistFormValuesFromForm(formEl);
+    state.registrazioneStudente.step = 1;
+    renderStep1();
+  });
+
+  legalLinks.forEach((link) => {
+    link.addEventListener("click", () => {
+      const target = link.getAttribute("data-legal");
+      if (!target) return;
+      persistFormValuesFromForm(formEl);
+      state.registrazioneStudente.view = target;
+      renderLegalView(target);
+    });
+  });
+}
+
+function setupLegalViewInteractions() {
+  const container = getRegistrationCardContent();
+  const backBtn = container?.querySelector(".btn-back-to-form");
+  backBtn?.addEventListener("click", () => {
+    state.registrazioneStudente.view = "wizard";
+    renderStep2();
+  });
+}
+
+function getLegalContent(type) {
+  if (type === "privacy") {
+    return {
+      title: "Informativa sulla Privacy",
+      paragraphs: [
+        "Proteggiamo i dati degli studenti con crittografia e accessi limitati al team di tutoring.",
+        "Ci servono i tuoi dati per offrirti analytics personalizzate e notifiche di studio mirate.",
+      ],
+      points: [
+        "I dati non vengono venduti a terzi",
+        "Puoi richiedere la cancellazione in ogni momento",
+        "Conserveremo le attività solo finché avremo il tuo consenso",
+      ],
+    };
+  }
+
+  return {
+    title: "Termini & Condizioni",
+    paragraphs: [
+      "Usiamo questo contratto per spiegarti come funziona IronMath e come gestiamo i tuoi progressi.",
+      "Registrandoti accetti di utilizzare la piattaforma in modo onesto e di non condividere account.",
+    ],
+    points: [
+      "Il supporto è pensato per studenti di scuola media",
+      "Gli esercizi prototipo possono cambiare senza preavviso",
+      "Possiamo sospendere l'accesso in caso di abuso",
+    ],
+  };
+}
+
+function persistFormValuesFromForm(formEl) {
+  if (!formEl) return;
+  const inputs = formEl.querySelectorAll("input[name]");
+  inputs.forEach((input) => updateFormStateFromInput(input));
+}
+
+function updateFormStateFromInput(input) {
+  if (!input || !input.name) return;
+  const formValues = state.registrazioneStudente.formValues;
+  if (!formValues) return;
+  if (input.type === "checkbox") {
+    formValues[input.name] = input.checked;
+  } else {
+    formValues[input.name] = input.value;
+  }
+}
+
+function escapeHtml(value = "") {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function isStep1Ready() {
+  return (
+    Boolean(state.registrazioneStudente.classeSelezionata) &&
+    Boolean(state.registrazioneStudente.motivazioneSelezionata)
+  );
+}
+
+function handleClassSelection(button, group) {
   const value = button.getAttribute("data-class");
   state.registrazioneStudente.classeSelezionata = value;
   state.schoolLevel = "medie";
   updateButtonGroupState(group, button);
-  maybeRevealStepTwo(stepTwoEl);
 }
 
-function handleSituationSelection(button, group, stepTwoEl) {
+function handleSituationSelection(button, group) {
   const value = button.getAttribute("data-situation");
   state.registrazioneStudente.motivazioneSelezionata = value;
   state.profile = value === "bravo" ? "forte" : "difficolta";
   updateButtonGroupState(group, button);
-  maybeRevealStepTwo(stepTwoEl);
 }
 
 function updateButtonGroupState(buttons, activeButton) {
@@ -198,22 +470,7 @@ function updateButtonGroupState(buttons, activeButton) {
   });
 }
 
-function maybeRevealStepTwo(stepTwoEl) {
-  if (!stepTwoEl) return;
-  const ready =
-    state.registrazioneStudente.classeSelezionata &&
-    state.registrazioneStudente.motivazioneSelezionata;
-  if (ready) {
-    const alreadyVisible = state.registrazioneStudente.step >= 2;
-    state.registrazioneStudente.step = 2;
-    stepTwoEl.classList.remove("hidden");
-    if (!alreadyVisible) {
-      stepTwoEl.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  }
-}
-
-function setupFormValidation(formEl, stepTwoEl, stepThreeEl) {
+function setupFormValidation(formEl) {
   if (!formEl) return;
 
   const dobInput = formEl.querySelector("#dob");
@@ -224,12 +481,14 @@ function setupFormValidation(formEl, stepTwoEl, stepThreeEl) {
     dobInput.addEventListener("change", () => {
       const age = calcolaEta(dobInput.value);
       aggiornaStatoMinorenne(age, parentEmailInput, parentEmailHelper);
+      updateFormStateFromInput(dobInput);
       validateRegistrationForm(formEl);
     });
   }
 
   formEl.addEventListener("input", (event) => {
     if (event.target.matches("input")) {
+      updateFormStateFromInput(event.target);
       validateRegistrationForm(formEl);
     }
 
@@ -241,8 +500,12 @@ function setupFormValidation(formEl, stepTwoEl, stepThreeEl) {
 
   formEl.addEventListener("submit", async (event) => {
     event.preventDefault();
+    persistFormValuesFromForm(formEl);
     if (!validateRegistrationForm(formEl)) {
-      showGlobalAlert("Completa tutti i campi obbligatori e risolvi gli errori evidenziati.", "error");
+      showGlobalAlert(
+        "Completa tutti i campi obbligatori e risolvi gli errori evidenziati.",
+        "error"
+      );
       return;
     }
 
@@ -255,10 +518,13 @@ function setupFormValidation(formEl, stepTwoEl, stepThreeEl) {
     try {
       const payload = raccogliDatiRegistrazione(formEl);
       await handleStudentRegistration(payload);
-      mostraStepTre(stepTwoEl, stepThreeEl);
+      mostraStepTre();
     } catch (error) {
       console.error("Errore registrazione studente", error);
-      showGlobalAlert("Qualcosa è andato storto. Riprova fra qualche minuto.", "error");
+      showGlobalAlert(
+        "Qualcosa è andato storto. Riprova fra qualche minuto.",
+        "error"
+      );
     } finally {
       submitBtn.textContent = defaultLabel;
       validateRegistrationForm(formEl);
@@ -302,7 +568,9 @@ function aggiornaStatoMinorenne(age, parentInput, helperEl) {
     parentInput.value = "";
     parentInput.disabled = true;
     parentInput.required = false;
-    helperEl.textContent = "Hai almeno 18 anni: non serve l'email del genitore.";
+    helperEl.textContent =
+      "Hai almeno 18 anni: non serve l'email del genitore.";
+    updateFormStateFromInput(parentInput);
   }
 }
 
@@ -311,7 +579,14 @@ function validateRegistrationForm(formEl) {
   const submitBtn = formEl.querySelector(".btn-register");
   if (!submitBtn) return false;
 
-  const requiredIds = ["username", "dob", "school", "student-email", "password", "confirm-password"];
+  const requiredIds = [
+    "username",
+    "dob",
+    "school",
+    "student-email",
+    "password",
+    "confirm-password",
+  ];
   let isValid = true;
 
   requiredIds.forEach((id) => {
@@ -385,22 +660,29 @@ function handleStudentRegistration(formData) {
   });
 }
 
-function mostraStepTre(stepTwoEl, stepThreeEl) {
-  stepTwoEl?.classList.add("hidden");
-  stepThreeEl?.classList.remove("hidden");
-  state.registrazioneStudente.step = 3;
-  stepThreeEl?.scrollIntoView({ behavior: "smooth", block: "start" });
+function mostraStepTre() {
+  renderStep3();
+  getRegistrationCardContent()?.scrollIntoView({
+    behavior: "smooth",
+    block: "start",
+  });
 }
 
-function setupPostRegistrationActions(stepThreeEl) {
-  if (!stepThreeEl) return;
-  stepThreeEl.querySelectorAll(".btn-post-register").forEach((btn) => {
+function setupPostRegistrationActions(container) {
+  if (!container) return;
+  container.querySelectorAll(".btn-post-register").forEach((btn) => {
     btn.addEventListener("click", () => {
       const action = btn.getAttribute("data-action");
       if (action === "approve") {
-        showGlobalAlert("TODO: attiveremo presto la conferma completa via email.", "info");
+        showGlobalAlert(
+          "TODO: attiveremo presto la conferma completa via email.",
+          "info"
+        );
       } else if (action === "limited") {
-        showGlobalAlert("Accesso limitato attivo. Ti portiamo nella dashboard prototipo.", "success");
+        showGlobalAlert(
+          "Accesso limitato attivo. Ti portiamo nella dashboard prototipo.",
+          "success"
+        );
         navigateTo("unit");
       }
     });
