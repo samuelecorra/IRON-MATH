@@ -1,54 +1,54 @@
 // Logica di apertura/chiusura del menu hamburger per mobile.
 
 // La funzione viene esportata e poi richiamata in main.js all'avvio della pagina.
-export function initHamburgerMenu() {
+export function inizializzaMenuHamburger() {
   // Recupero dal DOM il pulsante hamburger e il menu di navigazione.
-  const hamburgerBtn = document.getElementById("hamburger-btn");
-  const navMenu = document.getElementById("nav-menu");
+  const pulsanteHamburger = document.getElementById("pulsante-hamburger");
+  const menuNavigazione = document.getElementById("menu-navigazione");
 
   // Guard clause: se uno dei due elementi non esiste, interrompi.
   // Serve a evitare errori JavaScript su pagine che non hanno l'hamburger.
-  if (!hamburgerBtn || !navMenu) return;
+  if (!pulsanteHamburger || !menuNavigazione) return;
 
   // Funzione per chiudere il menu.
   // Rimuove classi, aggiorna aria-expanded, e riabilita lo scroll del body.
-  const closeHamburgerMenu = () => {
-    navMenu.classList.remove("open"); // Chiude visivamente il menu
-    hamburgerBtn.classList.remove("active"); // Resetta lâ€™animazione del pulsante
-    hamburgerBtn.setAttribute("aria-expanded", "false"); // AccessibilitÃ 
+  const chiudiMenuHamburger = () => {
+    menuNavigazione.classList.remove("aperta"); // Chiude visivamente il menu
+    pulsanteHamburger.classList.remove("attivo"); // Resetta l'animazione del pulsante
+    pulsanteHamburger.setAttribute("aria-expanded", "false"); // Accessibilità
     document.body.style.overflow = ""; // Riabilita lo scroll della pagina
   };
 
   // Funzione per aprire il menu.
-  const openHamburgerMenu = () => {
-    navMenu.classList.add("open"); // Apre visivamente il menu
-    hamburgerBtn.classList.add("active"); // Anima il pulsante hamburger
-    hamburgerBtn.setAttribute("aria-expanded", "true"); // AccessibilitÃ 
+  const apriMenuHamburger = () => {
+    menuNavigazione.classList.add("aperta"); // Apre visivamente il menu
+    pulsanteHamburger.classList.add("attivo"); // Anima il pulsante hamburger
+    pulsanteHamburger.setAttribute("aria-expanded", "true"); // Accessibilità
     document.body.style.overflow = "hidden"; // Disabilita lo scroll globale
   };
 
   // Quando clicco sul pulsante hamburger
-  hamburgerBtn.addEventListener("click", (event) => {
+  pulsanteHamburger.addEventListener("click", (event) => {
     event.stopPropagation(); // Impedisce al click di propagarsi al document
 
-    const isOpen = navMenu.classList.contains("open"); // Controllo se il menu Ã¨ giÃ  aperto
+    const aperto = menuNavigazione.classList.contains("aperta"); // Controllo se il menu è già aperto
 
-    // Toggle: se Ã¨ aperto chiudo, se Ã¨ chiuso apro
-    if (isOpen) {
-      closeHamburgerMenu();
+    // Toggle: se è aperto chiudo, se è chiuso apro
+    if (aperto) {
+      chiudiMenuHamburger();
     } else {
-      openHamburgerMenu();
+      apriMenuHamburger();
     }
   });
 
   // Click globale sul documento:
   // Se clicco fuori dal menu e fuori dal pulsante, il menu si chiude.
   document.addEventListener("click", (event) => {
-    const clickedOutsideMenu = !navMenu.contains(event.target);
-    const clickedOutsideBtn = !hamburgerBtn.contains(event.target);
+    const clicFuoriMenu = !menuNavigazione.contains(event.target);
+    const clicFuoriPulsante = !pulsanteHamburger.contains(event.target);
 
-    if (clickedOutsideMenu && clickedOutsideBtn) {
-      closeHamburgerMenu();
+    if (clicFuoriMenu && clicFuoriPulsante) {
+      chiudiMenuHamburger();
     }
   });
 
@@ -57,15 +57,17 @@ export function initHamburgerMenu() {
   // quindi forzo la chiusura del menu mobile.
   window.addEventListener("resize", () => {
     if (window.innerWidth > 1000) {
-      closeHamburgerMenu();
+      chiudiMenuHamburger();
     }
   });
 
   // Aggiungo listener ai bottoni interni del menu:
   // Se clicco una voce del menu mobile, chiudi il menu.
-  navMenu.querySelectorAll(".nav-btn").forEach((button) => {
-    button.addEventListener("click", () => {
-      closeHamburgerMenu();
+  menuNavigazione
+    .querySelectorAll(".pulsante-navigazione")
+    .forEach((pulsante) => {
+      pulsante.addEventListener("click", () => {
+        chiudiMenuHamburger();
+      });
     });
-  });
 }

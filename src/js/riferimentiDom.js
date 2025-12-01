@@ -1,5 +1,5 @@
 // Centralizza i riferimenti agli elementi DOM principali.
-export const appElement = document.getElementById("app");
-if (!appElement) {
+export const elementoApp = document.getElementById("app");
+if (!elementoApp) {
   console.error("Elemento #app non trovato nel DOM.");
 }

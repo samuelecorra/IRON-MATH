@@ -1,5 +1,5 @@
 /* HEADER */
-.im-header {
+.im-intestazione {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -18,23 +18,23 @@
   position: relative;
 }
 
-.hamburger-btn {
+.pulsante-hamburger {
   display: none;
 }
 
 @media (max-width: 1000px) {
-  .im-header {
+  .im-intestazione {
     padding: 14px 20px;
   }
 
   /* Mostra hamburger button */
-  .hamburger-btn {
+  .pulsante-hamburger {
     display: flex;
     order: 3;
   }
 
   /* Nav menu responsive */
-  .nav {
+  .navigazione {
     position: absolute;
     top: 100%;
     left: 0;
@@ -52,13 +52,13 @@
     z-index: 50;
   }
 
-  .nav.open {
+  .navigazione.aperta {
     transform: translateY(0);
     opacity: 1;
     visibility: visible;
   }
 
-  .nav-btn {
+  .pulsante-navigazione {
     width: 100%;
     justify-content: flex-start;
     padding: 16px 20px;
@@ -69,20 +69,20 @@
     font-size: 14px;
   }
 
-  .nav-btn:hover {
+  .pulsante-navigazione:hover {
     background: rgba(255, 255, 255, 0.08);
     border-color: transparent;
   }
 
-  .nav-auth-wrapper {
+  .contenitore-auth-navigazione {
     width: 100%;
   }
 
-  .nav-account-btn {
+  .pulsante-account-navigazione {
     width: 100%;
   }
 
-  .auth-dropdown {
+  .menu-auth {
     position: static;
     margin-top: 12px;
     min-width: auto;
@@ -93,31 +93,31 @@
 }
 
 @media (max-width: 640px) {
-  .im-header {
+  .im-intestazione {
     padding: 12px 16px;
   }
 }
 
 @media (max-width: 480px) {
-  .im-header {
+  .im-intestazione {
     padding: 12px 16px;
   }
 
-  .logo-text {
+  .testo-logo {
     font-size: 12px;
   }
 
-  .logo-img {
+  .immagine-logo {
     width: 32px;
     height: 32px;
   }
 
-  .hamburger-btn {
+  .pulsante-hamburger {
     width: 36px;
     height: 36px;
   }
 
-  .hamburger-line {
+  .linea-hamburger {
     width: 16px;
   }
 }

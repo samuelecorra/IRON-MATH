@@ -1,25 +1,25 @@
-import { registraVista, render } from "./visteRouter.js";
-import { renderHome } from "./visteHome.js";
-import { renderUnitPrototype, renderExercisePrototype } from "./visteUnita.js";
+import { registraVista, renderizzaVistaCorrente, navigaVersoVista } from "./visteRouter.js";
+import { renderizzaHome } from "./visteHome.js";
+import { renderizzaUnitaPrototipo, renderizzaEsercizioPrototipo } from "./visteUnita.js";
 import {
-  renderRegisterForm,
-  renderLoginForm,
-  renderProfilePage,
-  renderTermsPage,
-  renderPrivacyPage,
+  renderizzaModuloRegistrazione,
+  renderizzaModuloLogin,
+  renderizzaPaginaProfilo,
+  renderizzaPaginaTermini,
+  renderizzaPaginaPrivacy,
 } from "./visteAccount.js";
-import { initHamburgerMenu } from "./menuHamburger.js";
+import { inizializzaMenuHamburger } from "./menuHamburger.js";
 
 // Registra tutte le viste gestite dal router minimale.
-registraVista("home", renderHome);
-registraVista("unit", renderUnitPrototype);
-registraVista("exercise", renderExercisePrototype);
-registraVista("register", renderRegisterForm);
-registraVista("login", renderLoginForm);
-registraVista("profile", renderProfilePage);
-registraVista("terms", renderTermsPage);
-registraVista("privacy", renderPrivacyPage);
+registraVista("home", renderizzaHome);
+registraVista("unit", renderizzaUnitaPrototipo);
+registraVista("exercise", renderizzaEsercizioPrototipo);
+registraVista("register", renderizzaModuloRegistrazione);
+registraVista("login", renderizzaModuloLogin);
+registraVista("profile", renderizzaPaginaProfilo);
+registraVista("terms", renderizzaPaginaTermini);
+registraVista("privacy", renderizzaPaginaPrivacy);
 
 // Avvio dell'applicazione.
-render();
-initHamburgerMenu();
+renderizzaVistaCorrente();
+inizializzaMenuHamburger();

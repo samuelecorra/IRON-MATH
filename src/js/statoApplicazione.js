@@ -1,14 +1,14 @@
 // Definisce e condivide lo stato globale dell'applicazione.
-export const state = {
-  schoolLevel: null, // classe scolastica selezionata
-  profile: null, // profilo "forte" oppure "difficolta"
-  currentView: "home", // vista attuale renderizzata
-  currentStep: 0, // passo corrente nel percorso demo esercizi
+export const stato = {
+  livelloScolastico: null, // classe scolastica selezionata
+  profilo: null, // profilo "forte" oppure "difficolta"
+  vistaCorrente: "home", // vista attuale renderizzata
+  passoCorrente: 0, // passo corrente nel percorso demo esercizi
   registrazioneStudente: creaStatoRegistrazioneStudente(), // snapshot della procedura di registrazione
 };
 
 // Chiavi care alla persistenza locale/sessione.
-export const STORAGE_KEYS = {
+export const CHIAVI_STORAGE = {
   USERS: "ironmathUsers",
   CURRENT_USER: "ironmathCurrentUserId",
   REMEMBER_ME: "ironmathRememberMe",
@@ -20,25 +20,25 @@ export function creaStatoRegistrazioneStudente() {
   return {
     classeSelezionata: null,
     motivazioneSelezionata: null,
-    step: 1,
-    view: "wizard",
-    isMinor: null,
-    formValues: {
-      username: "",
-      dob: "",
-      school: "",
-      studentEmail: "",
-      parentEmail: "",
+    passo: 1,
+    vista: "wizard",
+    eMinorenne: null,
+    valoriForm: {
+      nomeUtente: "",
+      dataNascita: "",
+      scuola: "",
+      emailStudente: "",
+      emailGenitore: "",
       password: "",
-      confirmPassword: "",
-      terms: false,
+      confermaPassword: "",
+      termini: false,
       privacy: false,
     },
   };
 }
 
 // Sequenza utilizzata dalla demo esercizio passo-passo.
-export const steps = [
+export const passaggiEsercizio = [
   {
     title: "Step 1 – Capire il testo",
     body: `Un ragazzo dice: "Sto pensando a un numero. Se lo raddoppio e aggiungo 3, ottengo 11".

@@ -1,27 +1,27 @@
 // Gestione centralizzata di alert globali e modali custom.
-let activeModal = null;
+let modaleAttiva = null;
 
-export function showGlobalAlert(message, type = "info") {
-  let container = document.getElementById("global-alert-container");
-  if (!container) {
-    container = document.createElement("div");
-    container.id = "global-alert-container";
-    container.className = "global-alert-container";
-    document.body.prepend(container);
+export function mostraAvvisoGlobale(messaggio, tipo = "info") {
+  let contenitore = document.getElementById("contenitore-avviso-globale");
+  if (!contenitore) {
+    contenitore = document.createElement("div");
+    contenitore.id = "contenitore-avviso-globale";
+    contenitore.className = "contenitore-avviso-globale";
+    document.body.prepend(contenitore);
   }
-  container.innerHTML = `
-    <div class="global-alert global-alert-${type}">
-      <span>${message}</span>
+  contenitore.innerHTML = `
+    <div class="avviso-globale avviso-globale-${tipo}">
+      <span>${messaggio}</span>
       <button type="button" aria-label="Chiudi avviso">&times;</button>
     </div>
   `;
-  const closeBtn = container.querySelector("button");
-  closeBtn.addEventListener("click", () => {
-    container.remove();
+  const pulsanteChiusura = contenitore.querySelector("button");
+  pulsanteChiusura.addEventListener("click", () => {
+    contenitore.remove();
   });
 }
 
-export function showModal({
+export function mostraModale({
   title,
   message = "",
   contentHTML = "",
@@ -30,46 +30,46 @@ export function showModal({
   onConfirm,
   onCancel,
 }) {
-  closeModal();
-  const overlay = document.createElement("div");
-  overlay.className = "im-modal-overlay";
-  overlay.innerHTML = `
-    <div class="im-modal-card">
-      <h3 class="im-modal-title">${title}</h3>
-      ${message ? `<p class="im-modal-message">${message}</p>` : ""}
+  chiudiModale();
+  const sovrapposizione = document.createElement("div");
+  sovrapposizione.className = "im-strato-modale";
+  sovrapposizione.innerHTML = `
+    <div class="im-card-modale">
+      <h3 class="im-titolo-modale">${title}</h3>
+      ${message ? `<p class="im-messaggio-modale">${message}</p>` : ""}
       ${contentHTML}
-      <div class="im-modal-actions">
-        <button type="button" class="im-button secondary modal-cancel">${cancelText}</button>
-        <button type="button" class="im-button modal-confirm">${confirmText}</button>
+      <div class="im-azioni-modale">
+        <button type="button" class="im-button secondary modale-annulla">${cancelText}</button>
+        <button type="button" class="im-button modale-conferma">${confirmText}</button>
       </div>
     </div>
   `;
-  document.body.appendChild(overlay);
+  document.body.appendChild(sovrapposizione);
   document.body.classList.add("blurred");
-  activeModal = overlay;
+  modaleAttiva = sovrapposizione;
 
-  overlay.addEventListener("click", (event) => {
-    if (event.target === overlay) {
+  sovrapposizione.addEventListener("click", (event) => {
+    if (event.target === sovrapposizione) {
       if (onCancel) onCancel();
-      closeModal();
+      chiudiModale();
     }
   });
-  overlay.querySelector(".modal-cancel").addEventListener("click", () => {
+  sovrapposizione.querySelector(".modale-annulla").addEventListener("click", () => {
     if (onCancel) onCancel();
-    closeModal();
+    chiudiModale();
   });
-  overlay.querySelector(".modal-confirm").addEventListener("click", () => {
-    const shouldClose = onConfirm ? onConfirm() : true;
-    if (shouldClose !== false) {
-      closeModal();
+  sovrapposizione.querySelector(".modale-conferma").addEventListener("click", () => {
+    const deveChiudersi = onConfirm ? onConfirm() : true;
+    if (deveChiudersi !== false) {
+      chiudiModale();
     }
   });
 }
 
-export function closeModal() {
-  if (activeModal) {
-    activeModal.remove();
-    activeModal = null;
+export function chiudiModale() {
+  if (modaleAttiva) {
+    modaleAttiva.remove();
+    modaleAttiva = null;
   }
   document.body.classList.remove("blurred");
 }

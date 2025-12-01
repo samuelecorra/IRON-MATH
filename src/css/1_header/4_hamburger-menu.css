@@ -1,5 +1,5 @@
 /* Hamburger Menu */
-.hamburger-btn {
+.pulsante-hamburger {
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -14,12 +14,12 @@
   transition: all 0.2s ease;
 }
 
-.hamburger-btn:hover {
+.pulsante-hamburger:hover {
   border-color: var(--im-accent);
   background: rgba(255, 255, 255, 0.04);
 }
 
-.hamburger-line {
+.linea-hamburger {
   width: 20px;
   height: 2px;
   background: var(--im-text);
@@ -28,14 +28,14 @@
   transform-origin: center;
 }
 
-.hamburger-btn.active .hamburger-line:nth-child(1) {
+.pulsante-hamburger.attivo .linea-hamburger:nth-child(1) {
   transform: translateY(6px) rotate(45deg);
 }
 
-.hamburger-btn.active .hamburger-line:nth-child(2) {
+.pulsante-hamburger.attivo .linea-hamburger:nth-child(2) {
   opacity: 0;
 }
 
-.hamburger-btn.active .hamburger-line:nth-child(3) {
+.pulsante-hamburger.attivo .linea-hamburger:nth-child(3) {
   transform: translateY(-6px) rotate(-45deg);
 }

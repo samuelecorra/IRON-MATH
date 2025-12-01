@@ -1,22 +1,24 @@
 // Router minimale che delega il rendering alle viste registrate.
-import { state } from "./statoApplicazione.js";
+import { stato } from "./statoApplicazione.js";
 
-const viewRegistry = new Map();
+const registroViste = new Map();
 
 export function registraVista(nomeVista, renderer) {
-  viewRegistry.set(nomeVista, renderer);
+  registroViste.set(nomeVista, renderer);
 }
 
-export function render() {
-  const renderer = viewRegistry.get(state.currentView);
+export function renderizzaVistaCorrente() {
+  const renderer = registroViste.get(stato.vistaCorrente);
   if (typeof renderer === "function") {
     renderer();
   } else {
-    console.warn(`Nessun renderer registrato per la vista "${state.currentView}".`);
+    console.warn(
+      `Nessun renderer registrato per la vista "${stato.vistaCorrente}".`
+    );
   }
 }
 
-export function navigateTo(viewName) {
-  state.currentView = viewName;
-  render();
+export function navigaVersoVista(nomeVista) {
+  stato.vistaCorrente = nomeVista;
+  renderizzaVistaCorrente();
 }

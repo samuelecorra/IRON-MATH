@@ -1,21 +1,21 @@
 // Viste e interazioni legate alla landing/registrazione veloce in homepage.
-import { appElement } from "./riferimentiDom.js";
-import { state, creaStatoRegistrazioneStudente } from "./statoApplicazione.js";
-import { showGlobalAlert } from "./alertModal.js";
-import { navigateTo } from "./visteRouter.js";
+import { elementoApp } from "./riferimentiDom.js";
+import { stato, creaStatoRegistrazioneStudente } from "./statoApplicazione.js";
+import { mostraAvvisoGlobale } from "./alertModal.js";
+import { navigaVersoVista } from "./visteRouter.js";
 
-if (!appElement) {
+if (!elementoApp) {
   throw new Error("Impossibile renderizzare: #app non esiste.");
 }
 
-export function renderHome() {
-  state.currentView = "home";
-  state.schoolLevel = null;
-  state.profile = null;
-  state.registrazioneStudente = creaStatoRegistrazioneStudente();
-  state.registrazioneStudente.step = 1;
-  state.registrazioneStudente.view = "wizard";
-  appElement.innerHTML = `
+export function renderizzaHome() {
+  stato.vistaCorrente = "home";
+  stato.livelloScolastico = null;
+  stato.profilo = null;
+  stato.registrazioneStudente = creaStatoRegistrazioneStudente();
+  stato.registrazioneStudente.passo = 1;
+  stato.registrazioneStudente.vista = "wizard";
+  elementoApp.innerHTML = `
     <section class="im-card registration-card">
       <div class="registration-title">
         <h1>Registrazione Studente</h1>
@@ -24,70 +24,70 @@ export function renderHome() {
     </section>
   `;
 
-  initFlussoRegistrazioneStudente();
+  avviaFlussoRegistrazioneStudente();
 }
 
-function initFlussoRegistrazioneStudente() {
-  renderStep1();
+function avviaFlussoRegistrazioneStudente() {
+  renderizzaPasso1();
 }
 
-function getRegistrationCardContent() {
-  const container = document.getElementById("registration-card-content");
-  if (!container) {
+function ottieniContenutoSchedaRegistrazione() {
+  const contenitore = document.getElementById("registration-card-content");
+  if (!contenitore) {
     console.error("Contenitore #registration-card-content non trovato.");
     return null;
   }
-  return container;
+  return contenitore;
 }
 
-function renderStep1() {
-  const container = getRegistrationCardContent();
-  if (!container) return;
-  state.registrazioneStudente.step = 1;
-  state.registrazioneStudente.view = "wizard";
+function renderizzaPasso1() {
+  const contenitore = ottieniContenutoSchedaRegistrazione();
+  if (!contenitore) return;
+  stato.registrazioneStudente.passo = 1;
+  stato.registrazioneStudente.vista = "wizard";
 
-  const classOptions = [
+  const opzioniClasse = [
     { value: "prima", label: "Prima media" },
     { value: "seconda", label: "Seconda media" },
     { value: "terza", label: "Terza media" },
   ];
 
-  const situationOptions = [
+  const opzioniSituazione = [
     {
       value: "bravo",
-      label: "Sono gi√† bravo e voglio consolidare / eccellere",
+      label: "Sono gi‡ bravo e voglio consolidare / eccellere",
     },
     {
       value: "difficolta",
-      label: "Sono in difficolt√† e voglio evitare il debito / migliorare",
+      label: "Sono in difficolt‡ e voglio evitare il debito / migliorare",
     },
   ];
 
-  const isReady = isStep1Ready();
+  const passoPronto = passoUnoPronto();
 
-  container.innerHTML = `
+  contenitore.innerHTML = `
     <div class="step step-1">
-      <h2 class="step-title">Step 1 ¬∑ Raccontaci chi sei</h2>
+      <h2 class="step-title">Step 1 ñ Raccontaci chi sei</h2>
       <p class="step-description">
-        Seleziona la classe e la situazione scolastica: il resto della registrazione apparir√† automaticamente.
+        Seleziona la classe e la situazione scolastica: il resto della registrazione apparir‡ automaticamente.
       </p>
 
       <div class="step-block">
         <h3 class="step-subtitle">Scegli la tua classe</h3>
         <div class="button-group">
-          ${classOptions
+          ${opzioniClasse
             .map(
               ({ value, label }) => `
                 <button
                   class="btn-pill btn-class ${
-                    state.registrazioneStudente.classeSelezionata === value
+                    stato.registrazioneStudente.classeSelezionata === value
                       ? "active"
                       : ""
                   }"
                   type="button"
                   data-class="${value}"
                   aria-pressed="${
-                    state.registrazioneStudente.classeSelezionata === value
+                    stato.registrazioneStudente.classeSelezionata === value
                   }"
                 >
                   ${label}
@@ -99,21 +99,21 @@ function renderStep1() {
       </div>
 
       <div class="step-block">
-        <h3 class="step-subtitle">Qual √® la tua situazione?</h3>
+        <h3 class="step-subtitle">Qual Ë la tua situazione?</h3>
         <div class="button-group stacked">
-          ${situationOptions
+          ${opzioniSituazione
             .map(
               ({ value, label }) => `
                 <button
                   class="btn-pill btn-situation ${
-                    state.registrazioneStudente.motivazioneSelezionata === value
+                    stato.registrazioneStudente.motivazioneSelezionata === value
                       ? "active"
                       : ""
                   }"
                   type="button"
                   data-situation="${value}"
                   aria-pressed="${
-                    state.registrazioneStudente.motivazioneSelezionata === value
+                    stato.registrazioneStudente.motivazioneSelezionata === value
                   }"
                 >
                   ${label}
@@ -131,105 +131,105 @@ function renderStep1() {
     </div>
     <div class="wizard-footer">
       <button class="btn-next-step" type="button" ${
-        isReady ? "" : "disabled"
+        passoPronto ? "" : "disabled"
       }>Conferma e Prosegui</button>
     </div>
   `;
 
-  setupStep1Interactions(container);
+  configuraInterazioniPasso1(contenitore);
 }
 
-function renderStep2() {
-  const container = getRegistrationCardContent();
-  if (!container) return;
-  state.registrazioneStudente.step = 2;
-  state.registrazioneStudente.view = "wizard";
+function renderizzaPasso2() {
+  const contenitore = ottieniContenutoSchedaRegistrazione();
+  if (!contenitore) return;
+  stato.registrazioneStudente.passo = 2;
+  stato.registrazioneStudente.vista = "wizard";
 
-  const formValues = state.registrazioneStudente.formValues || {};
-  const isMinor = state.registrazioneStudente.isMinor;
-  if (isMinor === false && formValues.parentEmail) {
-    formValues.parentEmail = "";
+  const valoriForm = stato.registrazioneStudente.valoriForm || {};
+  const eMinorenne = stato.registrazioneStudente.eMinorenne;
+  if (eMinorenne === false && valoriForm.emailGenitore) {
+    valoriForm.emailGenitore = "";
   }
-  const parentHelperText =
-    isMinor === null
+  const testoHelperGenitore =
+    eMinorenne === null
       ? "Inseriscila se hai meno di 18 anni: useremo questo contatto per confermare l'iscrizione."
-      : isMinor
+      : eMinorenne
       ? "Obbligatorio per studenti sotto i 18 anni."
       : "Hai almeno 18 anni: non serve l'email del genitore.";
 
-  const parentDisabledAttr = isMinor === false ? "disabled" : "";
-  const parentRequiredAttr = isMinor ? "required" : "";
-  const parentValue = isMinor === false ? "" : formValues.parentEmail || "";
+  const attributoDisabilitatoGenitore = eMinorenne === false ? "disabled" : "";
+  const attributoObbligatorioGenitore = eMinorenne ? "required" : "";
+  const valoreGenitore = eMinorenne === false ? "" : valoriForm.emailGenitore || "";
 
-  container.innerHTML = `
+  contenitore.innerHTML = `
     <div class="step step-2" data-step="registrazione">
-      <h2 class="step-title">Step 2 ¬∑ Dati per la registrazione</h2>
+      <h2 class="step-title">Step 2 ñ Dati per la registrazione</h2>
       <p class="step-description">
         Compila i campi qui sotto: useremo questi dati per creare il tuo profilo IronMath e per avvisare il tuo tutor legale.
       </p>
       <form id="form-registrazione-studente" class="registration-form" novalidate>
         <div class="form-field">
-          <label for="username">Username<span class="required">*</span></label>
-          <input class="im-input" type="text" id="username" name="username" autocomplete="nickname" value="${escapeHtml(
-            formValues.username || ""
+          <label for="nome-utente">Username<span class="required">*</span></label>
+          <input class="im-input" type="text" id="nome-utente" name="nomeUtente" autocomplete="nickname" value="${sanificaHtmlLocale(
+            valoriForm.nomeUtente || ""
           )}" required />
         </div>
 
         <div class="form-field">
-          <label for="dob">Data di nascita<span class="required">*</span></label>
-          <input class="im-input" type="date" id="dob" name="dob" value="${escapeHtml(
-            formValues.dob || ""
+          <label for="data-nascita">Data di nascita<span class="required">*</span></label>
+          <input class="im-input" type="date" id="data-nascita" name="dataNascita" value="${sanificaHtmlLocale(
+            valoriForm.dataNascita || ""
           )}" required />
         </div>
 
         <div class="form-field">
-          <label for="school">Nome della scuola<span class="required">*</span></label>
-          <input class="im-input" type="text" id="school" name="school" value="${escapeHtml(
-            formValues.school || ""
+          <label for="scuola">Nome della scuola<span class="required">*</span></label>
+          <input class="im-input" type="text" id="scuola" name="scuola" value="${sanificaHtmlLocale(
+            valoriForm.scuola || ""
           )}" required />
         </div>
 
         <div class="form-field">
-          <label for="student-email">Email dello studente<span class="required">*</span></label>
-          <input class="im-input" type="email" id="student-email" name="studentEmail" autocomplete="email" value="${escapeHtml(
-            formValues.studentEmail || ""
+          <label for="email-studente">Email dello studente<span class="required">*</span></label>
+          <input class="im-input" type="email" id="email-studente" name="emailStudente" autocomplete="email" value="${sanificaHtmlLocale(
+            valoriForm.emailStudente || ""
           )}" required />
-          <small class="helper-text" id="student-email-helper">
-            Preferiamo un'email scolastica: presto diventer√† il canale ufficiale con i docenti.
+          <small class="helper-text" id="email-studente-helper">
+            Preferiamo un'email scolastica: presto diventer‡ il canale ufficiale con i docenti.
           </small>
         </div>
 
         <div class="form-field">
-          <label for="parent-email">Email del genitore/tutore</label>
-          <input class="im-input" type="email" id="parent-email" name="parentEmail" autocomplete="email" value="${escapeHtml(
-            parentValue
-          )}" ${parentDisabledAttr} ${parentRequiredAttr} />
-          <small class="helper-text" id="parent-email-helper">
-            ${parentHelperText}
+          <label for="email-genitore">Email del genitore/tutore</label>
+          <input class="im-input" type="email" id="email-genitore" name="emailGenitore" autocomplete="email" value="${sanificaHtmlLocale(
+            valoreGenitore
+          )}" ${attributoDisabilitatoGenitore} ${attributoObbligatorioGenitore} />
+          <small class="helper-text" id="email-genitore-helper">
+            ${testoHelperGenitore}
           </small>
         </div>
 
         <div class="form-field">
           <label for="password">Password<span class="required">*</span></label>
-          <input class="im-input" type="password" id="password" name="password" autocomplete="new-password" value="${escapeHtml(
-            formValues.password || ""
+          <input class="im-input" type="password" id="password" name="password" autocomplete="new-password" value="${sanificaHtmlLocale(
+            valoriForm.password || ""
           )}" required />
         </div>
 
         <div class="form-field">
-          <label for="confirm-password">Conferma password<span class="required">*</span></label>
-          <input class="im-input" type="password" id="confirm-password" name="confirmPassword" autocomplete="new-password" value="${escapeHtml(
-            formValues.confirmPassword || ""
+          <label for="conferma-password">Conferma password<span class="required">*</span></label>
+          <input class="im-input" type="password" id="conferma-password" name="confermaPassword" autocomplete="new-password" value="${sanificaHtmlLocale(
+            valoriForm.confermaPassword || ""
           )}" required />
-          <p class="helper-text error-text hidden" id="password-match-error">
+          <p class="helper-text error-text hidden" id="errore-conferma-password">
             Le password devono coincidere.
           </p>
         </div>
 
         <div class="legal-checks">
           <label class="checkbox-label">
-            <input type="checkbox" id="terms-checkbox" name="terms" ${
-              formValues.terms ? "checked" : ""
+            <input type="checkbox" id="termini-checkbox" name="termini" ${
+              valoriForm.termini ? "checked" : ""
             } />
             <span>
               Ho letto e accetto
@@ -238,7 +238,7 @@ function renderStep2() {
           </label>
           <label class="checkbox-label">
             <input type="checkbox" id="privacy-checkbox" name="privacy" ${
-              formValues.privacy ? "checked" : ""
+              valoriForm.privacy ? "checked" : ""
             } />
             <span>
               Ho letto e accetto
@@ -255,48 +255,48 @@ function renderStep2() {
     </div>
   `;
 
-  setupStep2Interactions(container);
+  configuraInterazioniPasso2(contenitore);
 }
 
-function renderLegalView(type) {
-  const container = getRegistrationCardContent();
-  if (!container) return;
-  state.registrazioneStudente.view = type;
-  const legalContent = getLegalContent(type);
-  container.innerHTML = `
+function renderizzaVistaLegale(tipo) {
+  const contenitore = ottieniContenutoSchedaRegistrazione();
+  if (!contenitore) return;
+  stato.registrazioneStudente.vista = tipo;
+  const contenutiLegali = ottieniContenutoLegale(tipo);
+  contenitore.innerHTML = `
     <div class="legal-view">
-      <h2 class="step-title">${legalContent.title}</h2>
-      ${legalContent.paragraphs
-        .map((p) => `<p class="step-description">${p}</p>`)
+      <h2 class="step-title">${contenutiLegali.title}</h2>
+      ${contenutiLegali.paragraphs
+        .map((paragrafo) => `<p class="step-description">${paragrafo}</p>`)
         .join("")}
       <ul>
-        ${legalContent.points.map((item) => `<li>${item}</li>`).join("")}
+        ${contenutiLegali.points.map((elemento) => `<li>${elemento}</li>`).join("")}
       </ul>
       <div class="wizard-footer center">
         <button class="btn-back-to-form" type="button">Capito, torna alla registrazione</button>
       </div>
     </div>
   `;
-  setupLegalViewInteractions();
+  configuraInterazioniVistaLegale();
 }
 
-function renderStep3() {
-  const container = getRegistrationCardContent();
-  if (!container) return;
-  state.registrazioneStudente.step = 3;
-  state.registrazioneStudente.view = "wizard";
-  container.innerHTML = `
+function renderizzaPasso3() {
+  const contenitore = ottieniContenutoSchedaRegistrazione();
+  if (!contenitore) return;
+  stato.registrazioneStudente.passo = 3;
+  stato.registrazioneStudente.vista = "wizard";
+  contenitore.innerHTML = `
     <div class="step step-3" data-step="post-registrazione">
-      <h2 class="step-title">Step 3 ¬∑ Registrazione completata</h2>
+      <h2 class="step-title">Step 3 ñ Registrazione completata</h2>
       <p>
-        Controlla la casella di posta elettronica del genitore/tutore che hai indicato: dovr√† confermare la tua iscrizione per sbloccare l'account completo.
+        Controlla la casella di posta elettronica del genitore/tutore che hai indicato: dovr‡ confermare la tua iscrizione per sbloccare l'account completo.
       </p>
       <p>
-        Nel frattempo puoi gi√† esplorare IronMath con un account limitato. Ti ricorderemo di completare la procedura.
+        Nel frattempo puoi gi‡ esplorare IronMath con un account limitato. Ti ricorderemo di completare la procedura.
       </p>
       <div class="button-group stacked">
         <button class="btn-post-register" type="button" data-action="approve">
-          Ho approvato / Il genitore approver√† via email
+          Ho approvato / Il genitore approver‡ via email
         </button>
         <button class="btn-post-register ghost" type="button" data-action="limited">
           Continua con account limitato
@@ -304,90 +304,90 @@ function renderStep3() {
       </div>
     </div>
   `;
-  setupPostRegistrationActions(container);
+  configuraAzioniPostRegistrazione(contenitore);
 }
 
-function setupStep1Interactions(container) {
-  if (!container) return;
-  const classButtons = container.querySelectorAll(".btn-class");
-  const situationButtons = container.querySelectorAll(".btn-situation");
-  const secondaryButtons = container.querySelectorAll(".btn-secondary");
-  const nextBtn = container.querySelector(".btn-next-step");
+function configuraInterazioniPasso1(contenitore) {
+  if (!contenitore) return;
+  const pulsantiClasse = contenitore.querySelectorAll(".btn-class");
+  const pulsantiSituazione = contenitore.querySelectorAll(".btn-situation");
+  const pulsantiSecondari = contenitore.querySelectorAll(".btn-secondary");
+  const pulsanteProssimo = contenitore.querySelector(".btn-next-step");
 
-  const updateNextButtonState = () => {
-    if (!nextBtn) return;
-    nextBtn.disabled = !isStep1Ready();
+  const aggiornaStatoPulsanteProssimo = () => {
+    if (!pulsanteProssimo) return;
+    pulsanteProssimo.disabled = !passoUnoPronto();
   };
 
-  classButtons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      handleClassSelection(btn, classButtons);
-      updateNextButtonState();
+  pulsantiClasse.forEach((pulsante) => {
+    pulsante.addEventListener("click", () => {
+      gestisciSelezioneClasse(pulsante, pulsantiClasse);
+      aggiornaStatoPulsanteProssimo();
     });
   });
 
-  situationButtons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      handleSituationSelection(btn, situationButtons);
-      updateNextButtonState();
+  pulsantiSituazione.forEach((pulsante) => {
+    pulsante.addEventListener("click", () => {
+      gestisciSelezioneSituazione(pulsante, pulsantiSituazione);
+      aggiornaStatoPulsanteProssimo();
     });
   });
 
-  secondaryButtons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      showGlobalAlert(
+  pulsantiSecondari.forEach((pulsante) => {
+    pulsante.addEventListener("click", () => {
+      mostraAvvisoGlobale(
         "Flussi dedicati a docenti e genitori in arrivo. Rimani sintonizzato!",
         "info"
       );
     });
   });
 
-  nextBtn?.addEventListener("click", () => {
-    state.registrazioneStudente.step = 2;
-    renderStep2();
+  pulsanteProssimo?.addEventListener("click", () => {
+    stato.registrazioneStudente.passo = 2;
+    renderizzaPasso2();
   });
 
-  updateNextButtonState();
+  aggiornaStatoPulsanteProssimo();
 }
 
-function setupStep2Interactions(container) {
-  if (!container) return;
-  const formEl = container.querySelector("#form-registrazione-studente");
-  const backBtn = container.querySelector(".btn-prev-step");
-  const legalLinks = container.querySelectorAll(".link-legal");
+function configuraInterazioniPasso2(contenitore) {
+  if (!contenitore) return;
+  const modulo = contenitore.querySelector("#form-registrazione-studente");
+  const pulsanteIndietro = contenitore.querySelector(".btn-prev-step");
+  const collegamentiLegali = contenitore.querySelectorAll(".link-legal");
 
-  if (!formEl) return;
+  if (!modulo) return;
 
-  setupFormValidation(formEl);
+  configuraValidazioneModulo(modulo);
 
-  backBtn?.addEventListener("click", () => {
-    persistFormValuesFromForm(formEl);
-    state.registrazioneStudente.step = 1;
-    renderStep1();
+  pulsanteIndietro?.addEventListener("click", () => {
+    salvaValoriModulo(modulo);
+    stato.registrazioneStudente.passo = 1;
+    renderizzaPasso1();
   });
 
-  legalLinks.forEach((link) => {
+  collegamentiLegali.forEach((link) => {
     link.addEventListener("click", () => {
-      const target = link.getAttribute("data-legal");
-      if (!target) return;
-      persistFormValuesFromForm(formEl);
-      state.registrazioneStudente.view = target;
-      renderLegalView(target);
+      const destinazione = link.getAttribute("data-legal");
+      if (!destinazione) return;
+      salvaValoriModulo(modulo);
+      stato.registrazioneStudente.vista = destinazione;
+      renderizzaVistaLegale(destinazione);
     });
   });
 }
 
-function setupLegalViewInteractions() {
-  const container = getRegistrationCardContent();
-  const backBtn = container?.querySelector(".btn-back-to-form");
-  backBtn?.addEventListener("click", () => {
-    state.registrazioneStudente.view = "wizard";
-    renderStep2();
+function configuraInterazioniVistaLegale() {
+  const contenitore = ottieniContenutoSchedaRegistrazione();
+  const pulsanteRitorno = contenitore?.querySelector(".btn-back-to-form");
+  pulsanteRitorno?.addEventListener("click", () => {
+    stato.registrazioneStudente.vista = "wizard";
+    renderizzaPasso2();
   });
 }
 
-function getLegalContent(type) {
-  if (type === "privacy") {
+function ottieniContenutoLegale(tipo) {
+  if (tipo === "privacy") {
     return {
       title: "Informativa sulla Privacy",
       paragraphs: [
@@ -397,7 +397,7 @@ function getLegalContent(type) {
       points: [
         "I dati non vengono venduti a terzi",
         "Puoi richiedere la cancellazione in ogni momento",
-        "Conserveremo le attivit√† solo finch√© avremo il tuo consenso",
+        "Conserveremo le attivit‡ solo finchÈ avremo il tuo consenso",
       ],
     };
   }
@@ -409,32 +409,32 @@ function getLegalContent(type) {
       "Registrandoti accetti di utilizzare la piattaforma in modo onesto e di non condividere account.",
     ],
     points: [
-      "Il supporto √® pensato per studenti di scuola media",
+      "Il supporto Ë pensato per studenti di scuola media",
       "Gli esercizi prototipo possono cambiare senza preavviso",
       "Possiamo sospendere l'accesso in caso di abuso",
     ],
   };
 }
 
-function persistFormValuesFromForm(formEl) {
-  if (!formEl) return;
-  const inputs = formEl.querySelectorAll("input[name]");
-  inputs.forEach((input) => updateFormStateFromInput(input));
+function salvaValoriModulo(modulo) {
+  if (!modulo) return;
+  const inputConNome = modulo.querySelectorAll("input[name]");
+  inputConNome.forEach((input) => aggiornaStatoModuloDaInput(input));
 }
 
-function updateFormStateFromInput(input) {
+function aggiornaStatoModuloDaInput(input) {
   if (!input || !input.name) return;
-  const formValues = state.registrazioneStudente.formValues;
-  if (!formValues) return;
+  const valoriForm = stato.registrazioneStudente.valoriForm;
+  if (!valoriForm) return;
   if (input.type === "checkbox") {
-    formValues[input.name] = input.checked;
+    valoriForm[input.name] = input.checked;
   } else {
-    formValues[input.name] = input.value;
+    valoriForm[input.name] = input.value;
   }
 }
 
-function escapeHtml(value = "") {
-  return String(value)
+function sanificaHtmlLocale(valore = "") {
+  return String(valore)
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
@@ -442,248 +442,248 @@ function escapeHtml(value = "") {
     .replace(/'/g, "&#39;");
 }
 
-function isStep1Ready() {
+function passoUnoPronto() {
   return (
-    Boolean(state.registrazioneStudente.classeSelezionata) &&
-    Boolean(state.registrazioneStudente.motivazioneSelezionata)
+    Boolean(stato.registrazioneStudente.classeSelezionata) &&
+    Boolean(stato.registrazioneStudente.motivazioneSelezionata)
   );
 }
 
-function handleClassSelection(button, group) {
-  const value = button.getAttribute("data-class");
-  state.registrazioneStudente.classeSelezionata = value;
-  state.schoolLevel = "medie";
-  updateButtonGroupState(group, button);
+function gestisciSelezioneClasse(pulsante, gruppo) {
+  const valore = pulsante.getAttribute("data-class");
+  stato.registrazioneStudente.classeSelezionata = valore;
+  stato.livelloScolastico = "medie";
+  aggiornaStatoGruppoPulsanti(gruppo, pulsante);
 }
 
-function handleSituationSelection(button, group) {
-  const value = button.getAttribute("data-situation");
-  state.registrazioneStudente.motivazioneSelezionata = value;
-  state.profile = value === "bravo" ? "forte" : "difficolta";
-  updateButtonGroupState(group, button);
+function gestisciSelezioneSituazione(pulsante, gruppo) {
+  const valore = pulsante.getAttribute("data-situation");
+  stato.registrazioneStudente.motivazioneSelezionata = valore;
+  stato.profilo = valore === "bravo" ? "forte" : "difficolta";
+  aggiornaStatoGruppoPulsanti(gruppo, pulsante);
 }
 
-function updateButtonGroupState(buttons, activeButton) {
-  buttons.forEach((btn) => {
-    btn.classList.toggle("active", btn === activeButton);
-    btn.setAttribute("aria-pressed", btn === activeButton ? "true" : "false");
+function aggiornaStatoGruppoPulsanti(pulsanti, pulsanteAttivo) {
+  pulsanti.forEach((pulsante) => {
+    pulsante.classList.toggle("active", pulsante === pulsanteAttivo);
+    pulsante.setAttribute("aria-pressed", pulsante === pulsanteAttivo ? "true" : "false");
   });
 }
 
-function setupFormValidation(formEl) {
-  if (!formEl) return;
+function configuraValidazioneModulo(modulo) {
+  if (!modulo) return;
 
-  const dobInput = formEl.querySelector("#dob");
-  const parentEmailHelper = formEl.querySelector("#parent-email-helper");
-  const parentEmailInput = formEl.querySelector("#parent-email");
+  const inputDataNascita = modulo.querySelector("#data-nascita");
+  const helperEmailGenitore = modulo.querySelector("#email-genitore-helper");
+  const inputEmailGenitore = modulo.querySelector("#email-genitore");
 
-  if (dobInput) {
-    dobInput.addEventListener("change", () => {
-      const age = calcolaEta(dobInput.value);
-      aggiornaStatoMinorenne(age, parentEmailInput, parentEmailHelper);
-      updateFormStateFromInput(dobInput);
-      validateRegistrationForm(formEl);
+  if (inputDataNascita) {
+    inputDataNascita.addEventListener("change", () => {
+      const eta = calcolaEta(inputDataNascita.value);
+      aggiornaStatoMinorenne(eta, inputEmailGenitore, helperEmailGenitore);
+      aggiornaStatoModuloDaInput(inputDataNascita);
+      validaModuloRegistrazione(modulo);
     });
   }
 
-  formEl.addEventListener("input", (event) => {
-    if (event.target.matches("input")) {
-      updateFormStateFromInput(event.target);
-      validateRegistrationForm(formEl);
+  modulo.addEventListener("input", (evento) => {
+    if (evento.target.matches("input")) {
+      aggiornaStatoModuloDaInput(evento.target);
+      validaModuloRegistrazione(modulo);
     }
 
-    if (event.target.id === "dob") {
-      const age = calcolaEta(event.target.value);
-      aggiornaStatoMinorenne(age, parentEmailInput, parentEmailHelper);
+    if (evento.target.id === "data-nascita") {
+      const eta = calcolaEta(evento.target.value);
+      aggiornaStatoMinorenne(eta, inputEmailGenitore, helperEmailGenitore);
     }
   });
 
-  formEl.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    persistFormValuesFromForm(formEl);
-    if (!validateRegistrationForm(formEl)) {
-      showGlobalAlert(
+  modulo.addEventListener("submit", async (evento) => {
+    evento.preventDefault();
+    salvaValoriModulo(modulo);
+    if (!validaModuloRegistrazione(modulo)) {
+      mostraAvvisoGlobale(
         "Completa tutti i campi obbligatori e risolvi gli errori evidenziati.",
         "error"
       );
       return;
     }
 
-    const submitBtn = formEl.querySelector(".btn-register");
-    if (!submitBtn) return;
-    const defaultLabel = submitBtn.textContent;
-    submitBtn.textContent = "Registrazione...";
-    submitBtn.disabled = true;
+    const pulsanteInvio = modulo.querySelector(".btn-register");
+    if (!pulsanteInvio) return;
+    const etichettaPredefinita = pulsanteInvio.textContent;
+    pulsanteInvio.textContent = "Registrazione...";
+    pulsanteInvio.disabled = true;
 
     try {
-      const payload = raccogliDatiRegistrazione(formEl);
-      await handleStudentRegistration(payload);
-      mostraStepTre();
-    } catch (error) {
-      console.error("Errore registrazione studente", error);
-      showGlobalAlert(
-        "Qualcosa √® andato storto. Riprova fra qualche minuto.",
+      const payload = raccogliDatiRegistrazione(modulo);
+      await gestisciRegistrazioneStudente(payload);
+      mostraPassoTre();
+    } catch (errore) {
+      console.error("Errore registrazione studente", errore);
+      mostraAvvisoGlobale(
+        "Qualcosa Ë andato storto. Riprova fra qualche minuto.",
         "error"
       );
     } finally {
-      submitBtn.textContent = defaultLabel;
-      validateRegistrationForm(formEl);
+      pulsanteInvio.textContent = etichettaPredefinita;
+      validaModuloRegistrazione(modulo);
     }
   });
 
-  validateRegistrationForm(formEl);
+  validaModuloRegistrazione(modulo);
 }
 
-function calcolaEta(value) {
-  if (!value) return null;
-  const today = new Date();
-  const birthday = new Date(value);
-  if (Number.isNaN(birthday.getTime())) return null;
-  let age = today.getFullYear() - birthday.getFullYear();
-  const month = today.getMonth() - birthday.getMonth();
-  if (month < 0 || (month === 0 && today.getDate() < birthday.getDate())) {
-    age--;
+function calcolaEta(valore) {
+  if (!valore) return null;
+  const oggi = new Date();
+  const compleanno = new Date(valore);
+  if (Number.isNaN(compleanno.getTime())) return null;
+  let eta = oggi.getFullYear() - compleanno.getFullYear();
+  const mese = oggi.getMonth() - compleanno.getMonth();
+  if (mese < 0 || (mese === 0 && oggi.getDate() < compleanno.getDate())) {
+    eta--;
   }
-  return age;
+  return eta;
 }
 
-function aggiornaStatoMinorenne(age, parentInput, helperEl) {
-  if (!parentInput || !helperEl) return;
-  if (age === null) {
-    state.registrazioneStudente.isMinor = null;
-    parentInput.disabled = false;
-    parentInput.required = false;
-    helperEl.textContent =
+function aggiornaStatoMinorenne(eta, inputGenitore, helperGenitore) {
+  if (!inputGenitore || !helperGenitore) return;
+  if (eta === null) {
+    stato.registrazioneStudente.eMinorenne = null;
+    inputGenitore.disabled = false;
+    inputGenitore.required = false;
+    helperGenitore.textContent =
       "Inseriscila se hai meno di 18 anni: useremo questo contatto per confermare l'iscrizione.";
     return;
   }
 
-  state.registrazioneStudente.isMinor = age < 18;
+  stato.registrazioneStudente.eMinorenne = eta < 18;
 
-  if (state.registrazioneStudente.isMinor) {
-    parentInput.disabled = false;
-    parentInput.required = true;
-    helperEl.textContent = "Obbligatorio per studenti sotto i 18 anni.";
+  if (stato.registrazioneStudente.eMinorenne) {
+    inputGenitore.disabled = false;
+    inputGenitore.required = true;
+    helperGenitore.textContent = "Obbligatorio per studenti sotto i 18 anni.";
   } else {
-    parentInput.value = "";
-    parentInput.disabled = true;
-    parentInput.required = false;
-    helperEl.textContent =
+    inputGenitore.value = "";
+    inputGenitore.disabled = true;
+    inputGenitore.required = false;
+    helperGenitore.textContent =
       "Hai almeno 18 anni: non serve l'email del genitore.";
-    updateFormStateFromInput(parentInput);
+    aggiornaStatoModuloDaInput(inputGenitore);
   }
 }
 
-function validateRegistrationForm(formEl) {
-  if (!formEl) return false;
-  const submitBtn = formEl.querySelector(".btn-register");
-  if (!submitBtn) return false;
+function validaModuloRegistrazione(modulo) {
+  if (!modulo) return false;
+  const pulsanteInvio = modulo.querySelector(".btn-register");
+  if (!pulsanteInvio) return false;
 
-  const requiredIds = [
-    "username",
-    "dob",
-    "school",
-    "student-email",
+  const idObbligatori = [
+    "nome-utente",
+    "data-nascita",
+    "scuola",
+    "email-studente",
     "password",
-    "confirm-password",
+    "conferma-password",
   ];
-  let isValid = true;
+  let valido = true;
 
-  requiredIds.forEach((id) => {
-    const input = formEl.querySelector(`#${id}`);
+  idObbligatori.forEach((id) => {
+    const input = modulo.querySelector(`#${id}`);
     if (!input) return;
     if (!input.value.trim()) {
-      isValid = false;
+      valido = false;
     }
     if (input.type === "email" && input.value && !input.checkValidity()) {
-      isValid = false;
+      valido = false;
     }
   });
 
-  if (state.registrazioneStudente.isMinor === true) {
-    const parentEmail = formEl.querySelector("#parent-email");
+  if (stato.registrazioneStudente.eMinorenne === true) {
+    const emailGenitore = modulo.querySelector("#email-genitore");
     if (
-      !parentEmail ||
-      parentEmail.disabled ||
-      !parentEmail.value.trim() ||
-      !parentEmail.checkValidity()
+      !emailGenitore ||
+      emailGenitore.disabled ||
+      !emailGenitore.value.trim() ||
+      !emailGenitore.checkValidity()
     ) {
-      isValid = false;
+      valido = false;
     }
   }
 
-  const termsChecked = formEl.querySelector("#terms-checkbox")?.checked;
-  const privacyChecked = formEl.querySelector("#privacy-checkbox")?.checked;
-  if (!termsChecked || !privacyChecked) {
-    isValid = false;
+  const terminiSelezionati = modulo.querySelector("#termini-checkbox")?.checked;
+  const privacySelezionata = modulo.querySelector("#privacy-checkbox")?.checked;
+  if (!terminiSelezionati || !privacySelezionata) {
+    valido = false;
   }
 
-  const passwordInput = formEl.querySelector("#password");
-  const confirmInput = formEl.querySelector("#confirm-password");
-  const passwordHelper = formEl.querySelector("#password-match-error");
+  const inputPassword = modulo.querySelector("#password");
+  const inputConferma = modulo.querySelector("#conferma-password");
+  const helperPassword = modulo.querySelector("#errore-conferma-password");
   if (
-    passwordInput &&
-    confirmInput &&
-    passwordInput.value &&
-    confirmInput.value &&
-    passwordInput.value !== confirmInput.value
+    inputPassword &&
+    inputConferma &&
+    inputPassword.value &&
+    inputConferma.value &&
+    inputPassword.value !== inputConferma.value
   ) {
-    passwordHelper?.classList.remove("hidden");
-    isValid = false;
+    helperPassword?.classList.remove("hidden");
+    valido = false;
   } else {
-    passwordHelper?.classList.add("hidden");
+    helperPassword?.classList.add("hidden");
   }
 
-  submitBtn.disabled = !isValid;
-  return isValid;
+  pulsanteInvio.disabled = !valido;
+  return valido;
 }
 
-function raccogliDatiRegistrazione(formEl) {
-  const formData = new FormData(formEl);
-  const payload = Object.fromEntries(formData.entries());
+function raccogliDatiRegistrazione(modulo) {
+  const datiModulo = new FormData(modulo);
+  const payload = Object.fromEntries(datiModulo.entries());
   return {
     ...payload,
-    classe: state.registrazioneStudente.classeSelezionata,
-    motivazione: state.registrazioneStudente.motivazioneSelezionata,
-    isMinor: state.registrazioneStudente.isMinor,
-    accettaTermini: formEl.querySelector("#terms-checkbox")?.checked || false,
-    accettaPrivacy: formEl.querySelector("#privacy-checkbox")?.checked || false,
+    classe: stato.registrazioneStudente.classeSelezionata,
+    motivazione: stato.registrazioneStudente.motivazioneSelezionata,
+    eMinorenne: stato.registrazioneStudente.eMinorenne,
+    accettaTermini: modulo.querySelector("#termini-checkbox")?.checked || false,
+    accettaPrivacy: modulo.querySelector("#privacy-checkbox")?.checked || false,
   };
 }
 
-function handleStudentRegistration(formData) {
+function gestisciRegistrazioneStudente(datiModulo) {
   return new Promise((resolve) => {
     setTimeout(() => {
-      console.info("Registrazione studente simulata", formData);
+      console.info("Registrazione studente simulata", datiModulo);
       resolve({ status: "pending_guardian" });
     }, 1200);
   });
 }
 
-function mostraStepTre() {
-  renderStep3();
-  getRegistrationCardContent()?.scrollIntoView({
+function mostraPassoTre() {
+  renderizzaPasso3();
+  ottieniContenutoSchedaRegistrazione()?.scrollIntoView({
     behavior: "smooth",
     block: "start",
   });
 }
 
-function setupPostRegistrationActions(container) {
-  if (!container) return;
-  container.querySelectorAll(".btn-post-register").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const action = btn.getAttribute("data-action");
-      if (action === "approve") {
-        showGlobalAlert(
+function configuraAzioniPostRegistrazione(contenitore) {
+  if (!contenitore) return;
+  contenitore.querySelectorAll(".btn-post-register").forEach((pulsante) => {
+    pulsante.addEventListener("click", () => {
+      const azione = pulsante.getAttribute("data-action");
+      if (azione === "approve") {
+        mostraAvvisoGlobale(
           "TODO: attiveremo presto la conferma completa via email.",
           "info"
         );
-      } else if (action === "limited") {
-        showGlobalAlert(
+      } else if (azione === "limited") {
+        mostraAvvisoGlobale(
           "Accesso limitato attivo. Ti portiamo nella dashboard prototipo.",
           "success"
         );
-        navigateTo("unit");
+        navigaVersoVista("unit");
       }
     });
   });

@@ -1,10 +1,10 @@
-.nav {
+.navigazione {
   display: flex;
   gap: 8px;
   align-items: center;
 }
 
-.nav-btn {
+.pulsante-navigazione {
   background: transparent;
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -18,32 +18,32 @@
   gap: 10px;
 }
 
-.nav-btn:hover {
+.pulsante-navigazione:hover {
   border-color: var(--im-accent);
   color: var(--im-accent);
 }
 
-.nav-label {
+.etichetta-navigazione {
   line-height: 1.2;
 }
 
-.nav-icon {
+.icona-navigazione {
   width: 18px;
   height: 18px;
   object-fit: contain;
 }
 
-.nav-auth-wrapper {
+.contenitore-auth-navigazione {
   position: relative;
   display: flex;
   align-items: center;
 }
 
-.nav-account-btn {
+.pulsante-account-navigazione {
   min-width: 0;
 }
 
-.auth-dropdown {
+.menu-auth {
   position: absolute;
   top: calc(100% + 8px);
   right: 0;
@@ -59,11 +59,11 @@
   z-index: 30;
 }
 
-.auth-dropdown.open {
+.menu-auth.aperta {
   display: flex;
 }
 
-.auth-dropdown-item {
+.menu-auth .voce-menu-auth {
   background: transparent;
   border: none;
   color: var(--im-text);
@@ -74,6 +74,6 @@
   cursor: pointer;
 }
 
-.auth-dropdown-item:hover {
+.menu-auth .voce-menu-auth:hover {
   background: rgba(255, 255, 255, 0.08);
 }

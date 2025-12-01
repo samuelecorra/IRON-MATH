@@ -35,44 +35,44 @@
      Questo implica che l'utente ci giunge sempre da non autenticato. -->
 
     <!-- HEADER PRINCIPALE - è un unico tag sia per l'header mobile che per quello desktop -->
-    <header class="im-header">
+    <header class="im-intestazione">
       <!-- Shortcut alla Homepage (Logo come img + NomeSito come span)-->
-      <a href="#" class="home-logo-shortcut">
+      <a href="#" class="scorciatoia-logo-home">
         <img
-          class="logo-img"
+          class="immagine-logo"
           src="../assets/imgs/favicon.png"
           alt="IronMath Logo"
         />
-        <span class="logo-text">IronMath</span>
+        <span class="testo-logo">IronMath</span>
       </a>
       <!-- BOTTONE HAMBURGER SOLO PER MOBILE (Se desktop -> invisibile) -->
       <button
-        class="hamburger-btn"
-        id="hamburger-btn"
+        class="pulsante-hamburger"
+        id="pulsante-hamburger"
         type="button"
         aria-label="Menu"
         aria-expanded="false"
       >
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
+        <span class="linea-hamburger"></span>
+        <span class="linea-hamburger"></span>
+        <span class="linea-hamburger"></span>
       </button>
       <!-- NAVBAR DESKTOP -->
-      <nav class="nav" id="nav-menu">
-        <button class="nav-btn" type="button">
-          <span class="nav-label">Manifesto</span>
+      <nav class="navigazione" id="menu-navigazione">
+        <button class="pulsante-navigazione" type="button">
+          <span class="etichetta-navigazione">Manifesto</span>
           <img
             src="../assets/icons/manifesto.png"
             alt="Icona Manifesto"
-            class="nav-icon"
+            class="icona-navigazione"
           />
         </button>
-        <button class="nav-btn" type="button">
-          <span class="nav-label">Accedi</span>
+        <button class="pulsante-navigazione" type="button">
+          <span class="etichetta-navigazione">Accedi</span>
           <img
             src="../assets/icons/account.png"
             alt="Icona Account"
-            class="nav-icon"
+            class="icona-navigazione"
           />
         </button>
       </nav>
@@ -226,10 +226,11 @@
       </aside>
     </div>
 
-    <footer class="im-footer">
+    <footer class="im-piede-pagina">
       <span>© 2025 IronMath - Learning Armor</span>
     </footer>
 
     <script type="module" src="../js/main.js"></script>
   </body>
 </html>
+

@@ -38,12 +38,12 @@ body {
 
 body.blurred header,
 body.blurred main,
-body.blurred .im-footer {
+body.blurred .im-piede-pagina {
   filter: blur(3px);
   pointer-events: none;
 }
 
-.global-alert-container {
+.contenitore-avviso-globale {
   position: fixed;
   top: 12px;
   left: 50%;
@@ -52,7 +52,7 @@ body.blurred .im-footer {
   z-index: 100;
 }
 
-.global-alert {
+.avviso-globale {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -64,7 +64,7 @@ body.blurred .im-footer {
   font-size: 14px;
 }
 
-.global-alert button {
+.avviso-globale button {
   background: transparent;
   border: none;
   color: inherit;
@@ -72,22 +72,22 @@ body.blurred .im-footer {
   cursor: pointer;
 }
 
-.global-alert-success {
+.avviso-globale-successo {
   background: rgba(255, 202, 40, 0.15);
   border-color: rgba(255, 202, 40, 0.35);
 }
 
-.global-alert-error {
+.avviso-globale-errore {
   background: rgba(183, 28, 28, 0.4);
   border-color: rgba(183, 28, 28, 0.7);
 }
 
-.global-alert-info {
+.avviso-globale-info {
   background: rgba(255, 255, 255, 0.08);
   border-color: rgba(255, 255, 255, 0.2);
 }
 
-.im-modal-overlay {
+.im-strato-modale {
   position: fixed;
   inset: 0;
   background: rgba(5, 5, 9, 0.75);
@@ -98,7 +98,7 @@ body.blurred .im-footer {
   padding: 20px;
 }
 
-.im-modal-card {
+.im-card-modale {
   width: min(90%, 420px);
   background: rgba(16, 16, 24, 0.95);
   border-radius: 20px;
@@ -107,21 +107,22 @@ body.blurred .im-footer {
   box-shadow: var(--im-shadow);
 }
 
-.im-modal-title {
+.im-titolo-modale {
   margin: 0 0 6px;
   font-size: 18px;
 }
 
-.im-modal-message {
+.im-messaggio-modale {
   margin: 0 0 12px;
   color: var(--im-muted);
   font-size: 14px;
 }
 
-.im-modal-actions {
+.im-azioni-modale {
   margin-top: 18px;
   display: flex;
   justify-content: flex-end;
   gap: 10px;
   flex-wrap: wrap;
 }
+

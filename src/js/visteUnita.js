@@ -1,47 +1,47 @@
-// Componenti che gestiscono la demo "unit√†" e l'esercizio guidato.
-import { appElement } from "./riferimentiDom.js";
-import { state, steps } from "./statoApplicazione.js";
-import { navigateTo } from "./visteRouter.js";
+// Componenti che gestiscono la demo "unit‡" e l'esercizio guidato.
+import { elementoApp } from "./riferimentiDom.js";
+import { stato, passaggiEsercizio } from "./statoApplicazione.js";
+import { navigaVersoVista } from "./visteRouter.js";
 
-export function renderUnitPrototype() {
-  const labelLevel = state.schoolLevel === "medie" ? "Scuole medie" : "Liceo";
-  const labelProfile =
-    state.profile === "forte"
+export function renderizzaUnitaPrototipo() {
+  const etichettaLivello = stato.livelloScolastico === "medie" ? "Scuole medie" : "Liceo";
+  const etichettaProfilo =
+    stato.profilo === "forte"
       ? "Profilo: curioso/forte"
-      : "Profilo: in difficolt√†";
+      : "Profilo: in difficolt‡";
 
-  appElement.innerHTML = `
+  elementoApp.innerHTML = `
     <section class="im-card">
-      <p class="im-tagline">${labelLevel}</p>
-      <h2 class="im-title">Unit√† prototipo: Equazioni di primo grado</h2>
+      <p class="im-tagline">${etichettaLivello}</p>
+      <h2 class="im-title">Unit‡ prototipo: Equazioni di primo grado</h2>
       <p class="im-subtitle">
         Prima di farti studiare, IronMath controlla se hai davvero le basi.
-        Se non superi il test preliminare, ti blocchiamo sull‚Äôargomento successivo:
-        non √® cattiveria, √® protezione.
+        Se non superi il test preliminare, ti blocchiamo sull'argomento successivo:
+        non Ë cattiveria, Ë protezione.
       </p>
 
       <div class="im-chip-group">
-        <span class="im-chip">${labelProfile}</span>
+        <span class="im-chip">${etichettaProfilo}</span>
         <span class="im-chip">Prerequisiti ferrei</span>
         <span class="im-chip">Diagnostica</span>
       </div>
 
       <div class="step-container" style="margin-top:14px;">
-        <div class="step-title">Prerequisiti per questa unit√†</div>
+        <div class="step-title">Prerequisiti per questa unit‡</div>
         <div class="step-body">
           <ul style="padding-left: 18px; margin: 6px 0;">
             <li>Aritmetica di base (operazioni con interi e frazioni)</li>
-            <li>Uso delle parentesi e priorit√† delle operazioni</li>
-            <li>Concetto di uguaglianza e bilanciamento di una ‚Äúbilancia‚Äù</li>
+            <li>Uso delle parentesi e priorit‡ delle operazioni</li>
+            <li>Concetto di uguaglianza e bilanciamento di una ìbilanciaî</li>
           </ul>
           <p style="margin-top:6px;">
-            Se uno di questi punti ti fa gi√† sudare, √® un segnale: meglio
+            Se uno di questi punti ti fa gi‡ sudare, Ë un segnale: meglio
             sistemarlo ora, non tra due anni quando dovrai affrontare parabole e integrali.
           </p>
         </div>
         <div class="step-footer">
-          <button class="im-button secondary" id="back-home">Indietro</button>
-          <button class="im-button" id="start-test" style="margin-left:8px;">
+          <button class="im-button secondary" id="torna-home">Indietro</button>
+          <button class="im-button" id="avvia-test" style="margin-left:8px;">
             Avvia test preliminare
           </button>
         </div>
@@ -49,54 +49,54 @@ export function renderUnitPrototype() {
     </section>
   `;
 
-  document.getElementById("back-home").addEventListener("click", () => {
-    navigateTo("home");
+  document.getElementById("torna-home").addEventListener("click", () => {
+    navigaVersoVista("home");
   });
 
-  document.getElementById("start-test").addEventListener("click", () => {
-    state.currentStep = 0;
-    navigateTo("exercise");
+  document.getElementById("avvia-test").addEventListener("click", () => {
+    stato.passoCorrente = 0;
+    navigaVersoVista("exercise");
   });
 }
 
-export function renderExercisePrototype() {
-  const step = steps[state.currentStep];
+export function renderizzaEsercizioPrototipo() {
+  const passaggioCorrente = passaggiEsercizio[stato.passoCorrente];
 
-  appElement.innerHTML = `
+  elementoApp.innerHTML = `
     <section class="im-card">
-      <p class="im-tagline">Esercizio guidato ‚Äì Demo</p>
+      <p class="im-tagline">Esercizio guidato ñ Demo</p>
       <h2 class="im-title">Equazione da frase a formula</h2>
       <p class="im-subtitle">
-        Questo non √® ancora un vero test IronMath. √à solo un assaggio del modo
+        Questo non Ë ancora un vero test IronMath. » solo un assaggio del modo
         in cui ti guideremo: uno step alla volta, senza saltare i passaggi.
       </p>
 
       <div class="step-container">
-        <div class="step-title">${step.title}</div>
+        <div class="step-title">${passaggioCorrente.title}</div>
         <div class="step-body" style="white-space: pre-line;">
-${step.body}
+${passaggioCorrente.body}
         </div>
         <div class="step-footer">
-          <button class="im-button secondary" id="btn-back-unit">Indietro</button>
-          <button class="im-button" id="btn-next-step">
-            ${state.currentStep < steps.length - 1 ? "Avanti" : "Fine demo"}
+          <button class="im-button secondary" id="btn-indietro-unita">Indietro</button>
+          <button class="im-button" id="btn-prossimo-passo">
+            ${stato.passoCorrente < passaggiEsercizio.length - 1 ? "Avanti" : "Fine demo"}
           </button>
         </div>
       </div>
     </section>
   `;
 
-  document.getElementById("btn-back-unit").addEventListener("click", () => {
-    navigateTo("unit");
+  document.getElementById("btn-indietro-unita").addEventListener("click", () => {
+    navigaVersoVista("unit");
   });
 
-  document.getElementById("btn-next-step").addEventListener("click", () => {
-    if (state.currentStep < steps.length - 1) {
-      state.currentStep++;
-      navigateTo("exercise");
+  document.getElementById("btn-prossimo-passo").addEventListener("click", () => {
+    if (stato.passoCorrente < passaggiEsercizio.length - 1) {
+      stato.passoCorrente++;
+      navigaVersoVista("exercise");
     } else {
-      state.currentStep = 0;
-      navigateTo("unit");
+      stato.passoCorrente = 0;
+      navigaVersoVista("unit");
     }
   });
 }

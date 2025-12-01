@@ -1,79 +1,79 @@
 // Helper legati a localStorage/sessionStorage per utenti e login.
-import { STORAGE_KEYS } from "./statoApplicazione.js";
+import { CHIAVI_STORAGE } from "./statoApplicazione.js";
 
-export function getUsers() {
-  const raw = localStorage.getItem(STORAGE_KEYS.USERS);
-  if (!raw) return [];
+export function ottieniUtenti() {
+  const datiGrezzi = localStorage.getItem(CHIAVI_STORAGE.USERS);
+  if (!datiGrezzi) return [];
   try {
-    const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed : [];
-  } catch (err) {
-    console.error("Errore parse utenti", err);
+    const convertiti = JSON.parse(datiGrezzi);
+    return Array.isArray(convertiti) ? convertiti : [];
+  } catch (errore) {
+    console.error("Errore parse utenti", errore);
     return [];
   }
 }
 
-export function saveUsers(users) {
-  localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(users));
+export function salvaUtenti(elencoUtenti) {
+  localStorage.setItem(CHIAVI_STORAGE.USERS, JSON.stringify(elencoUtenti));
 }
 
-export function findUserByUsernameOrEmail(identifier) {
-  if (!identifier) return null;
-  const cleanIdentifier = identifier.trim().toLowerCase();
+export function trovaUtentePerUsernameOEmail(identificativo) {
+  if (!identificativo) return null;
+  const identificativoPulito = identificativo.trim().toLowerCase();
   return (
-    getUsers().find(
-      (user) =>
-        user.username.toLowerCase() === cleanIdentifier ||
-        user.email.toLowerCase() === cleanIdentifier
+    ottieniUtenti().find(
+      (utente) =>
+        utente.username.toLowerCase() === identificativoPulito ||
+        utente.email.toLowerCase() === identificativoPulito
     ) || null
   );
 }
 
-export function setCurrentUser(userId) {
-  if (userId) {
-    localStorage.setItem(STORAGE_KEYS.CURRENT_USER, String(userId));
+export function impostaUtenteCorrente(idUtente) {
+  if (idUtente) {
+    localStorage.setItem(CHIAVI_STORAGE.CURRENT_USER, String(idUtente));
   } else {
-    localStorage.removeItem(STORAGE_KEYS.CURRENT_USER);
+    localStorage.removeItem(CHIAVI_STORAGE.CURRENT_USER);
   }
 }
 
-export function getCurrentUser() {
-  const userId = localStorage.getItem(STORAGE_KEYS.CURRENT_USER);
-  if (!userId) return null;
-  const user = getUsers().find((u) => String(u.id) === String(userId));
-  if (!user) {
-    setCurrentUser(null);
+export function ottieniUtenteCorrente() {
+  const idUtente = localStorage.getItem(CHIAVI_STORAGE.CURRENT_USER);
+  if (!idUtente) return null;
+  const utente = ottieniUtenti().find((u) => String(u.id) === String(idUtente));
+  if (!utente) {
+    impostaUtenteCorrente(null);
   }
-  return user || null;
+  return utente || null;
 }
 
-export function logoutCurrentUser() {
-  setCurrentUser(null);
+export function disconnettiUtenteCorrente() {
+  impostaUtenteCorrente(null);
 }
 
-export function setRememberMe(flag, credentials) {
-  sessionStorage.setItem(STORAGE_KEYS.REMEMBER_ME, flag ? "true" : "false");
-  if (flag && credentials) {
+export function impostaRicordami(flag, credenziali) {
+  sessionStorage.setItem(CHIAVI_STORAGE.REMEMBER_ME, flag ? "true" : "false");
+  if (flag && credenziali) {
     sessionStorage.setItem(
-      STORAGE_KEYS.REMEMBERED_LOGIN,
-      JSON.stringify(credentials)
+      CHIAVI_STORAGE.REMEMBERED_LOGIN,
+      JSON.stringify(credenziali)
     );
   } else {
-    sessionStorage.removeItem(STORAGE_KEYS.REMEMBERED_LOGIN);
+    sessionStorage.removeItem(CHIAVI_STORAGE.REMEMBERED_LOGIN);
   }
 }
 
-export function getRememberMe() {
-  return sessionStorage.getItem(STORAGE_KEYS.REMEMBER_ME) === "true";
+export function ottieniPreferenzaRicordami() {
+  return sessionStorage.getItem(CHIAVI_STORAGE.REMEMBER_ME) === "true";
 }
 
-export function getRememberedCredentials() {
-  const raw = sessionStorage.getItem(STORAGE_KEYS.REMEMBERED_LOGIN);
-  if (!raw) return null;
+export function ottieniCredenzialiMemorizzate() {
+  const datiGrezzi = sessionStorage.getItem(CHIAVI_STORAGE.REMEMBERED_LOGIN);
+  if (!datiGrezzi) return null;
   try {
-    return JSON.parse(raw);
-  } catch (err) {
-    console.error("Errore parse remember me", err);
+    return JSON.parse(datiGrezzi);
+  } catch (errore) {
+    console.error("Errore parse remember me", errore);
     return null;
   }
 }
